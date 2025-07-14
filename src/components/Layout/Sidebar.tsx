@@ -12,8 +12,9 @@ import {
   LogOut,
   Briefcase,
   UserCheck,
-  TrendingUp,
-  Building
+  Building,
+  Megaphone,
+  CalendarClock
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -45,10 +46,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         ...baseItems,
         { path: '/employees', icon: Users, label: 'Employees' },
         { path: '/attendance-overview', icon: UserCheck, label: 'Attendance' },
-        { path: '/leave-management', icon: Calendar, label: 'Leave Requests' },
+        { path: '/leave-management', icon: CalendarClock, label: 'Leave Requests' },
         { path: '/payroll-management', icon: DollarSign, label: 'Payroll' },
-        { path: '/recruitment', icon: Briefcase, label: 'Recruitment' },
-        { path: '/reports', icon: TrendingUp, label: 'Reports' }
+        { path: '/job-post', icon: Megaphone, label: 'Job Post' },
+        { path: '/recruitment', icon: Briefcase, label: 'Recruitment' }
+        
       ];
     } else if (user?.role === 'admin') {
       return [

@@ -1,0 +1,227 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useAuth } from '../../contexts/AuthContext';
+import { mockApplicants } from '../../data/mockData';
+import { Applicant } from '../../types';
+import Card from '../../components/UI/Card';
+import Button from '../../components/UI/Button';
+
+const HRApplicantDetails: React.FC = () => {
+  const { user } = useAuth();
+  const { applicantId } = useParams<{ applicantId: string }>();
+  const [applicant, setApplicant] = useState<Applicant | null>(null);
+  const [interviewForm, setInterviewForm] = useState({
+    date: '',
+    time: ''
+  });
+
+  useEffect(() => {
+    const foundApplicant = mockApplicants.find(app => app.id === applicantId);
+    if (!foundApplicant) {
+      toast.error('Applicant not found');
+      return;
+    }
+    setApplicant(foundApplicant);
+    if (foundApplicant.interviewDate && foundApplicant.interviewTime) {
+      setInterviewForm({
+        date: foundApplicant.interviewDate,
+        time: foundApplicant.interviewTime
+      });
+    }
+  }, [applicantId]);
+
+  const handleInterviewInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInterviewForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleScheduleInterview = () => {
+    if (!interviewForm.date || !interviewForm.time) {
+      toast.error('Please select both date and time for the interview');
+      return;
+    }
+    if (applicant) {
+      const updatedApplicants = mockApplicants.map(app =>
+        app.id === applicant.id
+          ? { ...app, interviewDate: interviewForm.date, interviewTime: interviewForm.time, status: 'interview_scheduled' as Applicant['status'] }
+          : app
+      );
+      mockApplicants.splice(0, mockApplicants.length, ...updatedApplicants);
+      setApplicant(updatedApplicants.find(app => app.id === applicant.id)!);
+      toast.success(`Interview scheduled for ${applicant.name} on ${interviewForm.date} at ${interviewForm.time}`);
+    }
+  };
+
+  const handleHire = () => {
+    if (applicant) {
+      const updatedApplicants = mockApplicants.map(app =>
+        app.id === applicant.id
+          ? { ...app, status: 'hired' as Applicant['status'] }
+          : app
+      );
+      mockApplicants.splice(0, mockApplicants.length, ...updatedApplicants);
+      setApplicant(updatedApplicants.find(app => app.id === applicant.id)!);
+      toast.success(`${applicant.name} has been hired!`);
+    }
+  };
+
+  const handleReject = () => {
+    if (applicant) {
+      const updatedApplicants = mockApplicants.map(app =>
+        app.id === applicant.id
+          ? { ...app, status: 'rejected' as Applicant['status'] }
+          : app
+      );
+      mockApplicants.splice(0, mockApplicants.length, ...updatedApplicants);
+      setApplicant(updatedApplicants.find(app => app.id === applicant.id)!);
+      toast.error(`${applicant.name} has been rejected.`);
+    }
+  };
+
+  if (!applicant) {
+    return (
+      <div className="space-y-6">
+        <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
+          <h1 className="text-2xl font-bold mb-2">Applicant Details</h1>
+          <p className="text-emerald-100">Loading applicant data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const isFinalStatus = applicant.status === 'hired' || applicant.status === 'rejected';
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
+        <h1 className="text-2xl font-bold mb-2">Applicant Details</h1>
+      </div>
+
+      <Card>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Full Name</h3>
+            <p className="text-gray-900">{applicant.name}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Email</h3>
+            <p className="text-gray-900">{applicant.email}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Phone</h3>
+            <p className="text-gray-900">{applicant.phone}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Applied Date</h3>
+            <p className="text-gray-900">{applicant.appliedDate}</p>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Application Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Job Title</h3>
+            <p className="text-gray-900">{applicant.jobTitle}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Status</h3>
+            <p className="text-gray-900 capitalize">{applicant.status}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Experience</h3>
+            <p className="text-gray-900">{applicant.experience}</p>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-700">Education</h3>
+            <p className="text-gray-900">{applicant.education}</p>
+          </div>
+          <div className="md:col-span-2">
+            <h3 className="text-sm font-medium text-gray-700">Resume</h3>
+            <p className="text-gray-900">
+              <a href={applicant.resume} target="_blank" rel="noopener noreferrer" className="text-emerald-500 hover:underline">
+                View Resume
+              </a>
+            </p>
+          </div>
+          <div className="md:col-span-2">
+            <h3 className="text-sm font-medium text-gray-700">Cover Letter</h3>
+            <p className="text-gray-900">{applicant.coverLetter}</p>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Skills</h2>
+        <div className="flex flex-wrap gap-2">
+          {applicant.skills.map((skill, index) => (
+            <span
+              key={index}
+              className="inline-block bg-emerald-100 text-emerald-800 text-sm font-medium px-2.5 py-0.5 rounded"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </Card>
+
+      <Card>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Schedule Interview</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Interview Date</label>
+            <input
+              type="date"
+              name="date"
+              value={interviewForm.date}
+              onChange={handleInterviewInputChange}
+              disabled={isFinalStatus}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Interview Time</label>
+            <input
+              type="time"
+              name="time"
+              value={interviewForm.time}
+              onChange={handleInterviewInputChange}
+              disabled={isFinalStatus}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100"
+            />
+          </div>
+        </div>
+        <div className="flex space-x-4 mt-4">
+          <Button
+            onClick={handleScheduleInterview}
+            disabled={isFinalStatus}
+            className="bg-emerald-500 hover:bg-emerald-600 text-white focus:ring-emerald-600 disabled:bg-gray-400"
+          >
+            Schedule Interview
+          </Button>
+        
+          <Button
+            onClick={handleHire}
+            disabled={isFinalStatus}
+            className="bg-green-500 hover:bg-green-600 text-white focus:ring-green-600 disabled:bg-gray-400"
+          >
+            Hire
+          </Button>
+
+          <Button
+            onClick={handleReject}
+            disabled={isFinalStatus}
+            className="bg-red-500 hover:bg-red-600 text-white focus:ring-red-600 disabled:bg-gray-400"
+          >
+            Reject
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+};
+
+export default HRApplicantDetails;

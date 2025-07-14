@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout/Layout';
 import Login from './pages/Login';
@@ -7,6 +8,15 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Employee/Profile';
 import Attendance from './pages/Employee/Attendance';
 import EmployeeList from './pages/HR/EmployeeList';
+import EmployeePayroll from './pages/Employee/EmployeePayroll';
+import EmployeeLeavePage from './pages/Employee/EmployeeLeavePage';
+import PayrollManagement from './pages/HR/PayrollManagement';
+import HRAttendance from './pages/HR/HRAttendance';
+import HRLeaveManagement from './pages/HR/HRLeaveManagement';
+import HRJobPosting from './pages/HR/HRJobPosting';
+import HREmployeeDetails from './pages/HR/HREmployeeDetails';
+import HRRecruitment from './pages/HR/HRRecruitment';
+import HRApplicantDetails from './pages/HR/HRApplicantDetails';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -44,6 +54,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const App: React.FC = () => {
   return (
     <AuthProvider>
+      <Toaster position="bottom-right" />
       <Router>
         <Routes>
           <Route path="/login" element={
@@ -63,16 +74,18 @@ const App: React.FC = () => {
             <Route path="attendance" element={<Attendance />} />
             
             {/* Employee Routes */}
-            <Route path="leaves" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Leave Management (Employee)</div>} />
-            <Route path="payroll" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Payroll (Employee)</div>} />
+            <Route path="leaves" element={<EmployeeLeavePage/>} />
+            <Route path="payroll" element={<EmployeePayroll/>} />
             
             {/* HR Routes */}
             <Route path="employees" element={<EmployeeList/>} />
-            <Route path="attendance-overview" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Attendance Overview (HR)</div>} />
-            <Route path="leave-management" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Leave Management (HR)</div>} />
-            <Route path="payroll-management" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Payroll Management (HR)</div>} />
-            <Route path="recruitment" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Recruitment (HR)</div>} />
-            <Route path="reports" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Reports (HR)</div>} />
+            <Route path="/employee-details/:employeeId" element={<HREmployeeDetails />} />
+            <Route path="attendance-overview" element={<HRAttendance/>} />
+            <Route path="leave-management" element={<HRLeaveManagement/>} />
+            <Route path="payroll-management" element={<PayrollManagement/>} />
+            <Route path="job-post" element={<HRJobPosting/>} />
+            <Route path="/recruitment" element={<HRRecruitment />} />
+            <Route path="/applicant-details/:applicantId" element={<HRApplicantDetails />} />
             
             {/* Admin Routes */}
             <Route path="employee-records" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Employee Records (Admin)</div>} />

@@ -1,4 +1,4 @@
-import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats } from '../types';
+import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats, Applicant } from '../types';
 
 // Mock Users
 export const mockUsers: User[] = [
@@ -90,7 +90,7 @@ export const mockEmployees: Employee[] = [
   {
     id: '5',
     name: 'Feven Haile',
-    email: 'abebe.kebede@company.com',
+    email: 'feven.haile@company.com',
     role: 'employee',
     avatar: '',
     department: 'Sales',
@@ -176,8 +176,8 @@ export const mockLeaveRequests: LeaveRequest[] = [
     employeeName: 'Helen Tesfaye',
     type: 'sick',
     startDate: '2024-01-20',
-    endDate: '2024-01-20',
-    days: 1,
+    endDate: '2025-07-20',
+    days: 456,
     reason: 'Flu symptoms',
     status: 'approved',
     approvedBy: 'Sarah Johnson',
@@ -196,7 +196,7 @@ export const mockPayrollRecords: PayrollRecord[] = [
     year: 2024,
     basicSalary: 75000,
     allowances: 5000,
-    overtime: 2000,
+    overtime: 500,
     deductions: 1500,
     taxes: 15000,
     netSalary: 65500,
@@ -227,9 +227,12 @@ export const mockJobPostings: JobPosting[] = [
     title: 'Senior Frontend Developer',
     department: 'Engineering',
     description: 'We are looking for a skilled Frontend Developer to join our team and help build amazing user experiences.',
-    requirements: ['React', 'TypeScript', '3+ years experience', 'UI/UX knowledge'],
+    experience: '3+ years',
+    education: 'Bachelor\'s degree in Computer Science or related field',
+    educationField: 'Computer Science',
     salary: 'ETB 80,000 - ETB 100,000',
-    type: 'full-time',
+    type: 'Permanent',
+    employmentType: 'full-time',
     location: 'Remote',
     postedDate: '2024-01-10',
     expiryDate: '2024-02-10',
@@ -241,9 +244,12 @@ export const mockJobPostings: JobPosting[] = [
     title: 'Marketing Coordinator',
     department: 'Marketing',
     description: 'Join our marketing team to create compelling campaigns and drive business growth.',
-    requirements: ['Digital Marketing', 'Content Creation', '2+ years experience', 'Analytics'],
+    experience: '2+ years',
+    education: 'Bachelor\'s degree in Marketing or related field',
+    educationField: 'Marketing',
     salary: 'ETB 60,000 - ETB 75,000',
-    type: 'full-time',
+    type: 'Permanent',
+    employmentType: 'full-time',
     location: 'Bole Sub City, Addis Ababa',
     postedDate: '2024-01-12',
     expiryDate: '2024-02-12',
@@ -283,13 +289,79 @@ export const mockNotifications: Notification[] = [
   }
 ];
 
+export const mockApplicants: Applicant[] = [
+  {
+    id: '1',
+    name: 'Selamawit Bekele',
+    email: 'selamawit.bekele@example.com',
+    phone: '+251-912-345-678',
+    jobId: '1',
+    jobTitle: 'Software Engineer',
+    resume: 'resumes/selamawit_bekele_resume.pdf',
+    coverLetter: 'Passionate about building scalable web applications...',
+    appliedDate: '2025-06-01',
+    status: 'pending',
+    skills: ['React', 'Node.js', 'TypeScript'],
+    experience: '2-4 years',
+    education: "Bachelor's Degree in Computer Science"
+  },
+  {
+    id: '2',
+    name: 'Tewodros Alemayehu',
+    email: 'tewodros.alemayehu@example.com',
+    phone: '+251-911-987-654',
+    jobId: '2',
+    jobTitle: 'Data Analyst',
+    resume: 'resumes/tewodros_alemayehu_resume.pdf',
+    coverLetter: 'Experienced in data analysis and visualization...',
+    appliedDate: '2025-06-05',
+    status: 'reviewed',
+    skills: ['Python', 'SQL', 'Tableau'],
+    experience: '3-5 years',
+    education: "Master's Degree in Data Science"
+  },
+  {
+    id: '3',
+    name: 'Lidya Getachew',
+    email: 'lidya.getachew@example.com',
+    phone: '+251-913-456-789',
+    jobId: '3',
+    jobTitle: 'Marketing Specialist',
+    resume: 'resumes/lidya_getachew_resume.pdf',
+    coverLetter: 'Skilled in digital marketing and campaign management...',
+    appliedDate: '2025-06-10',
+    status: 'interview_scheduled',
+    skills: ['SEO', 'Content Marketing', 'Google Analytics'],
+    experience: '1-3 years',
+    education: "Bachelor's Degree in Marketing",
+    interviewDate: '2025-07-20',
+    interviewTime: '10:00'
+  },
+  {
+    id: '4',
+    name: 'Yohannes Desta',
+    email: 'yohannes.desta@example.com',
+    phone: '+251-914-123-456',
+    jobId: '1',
+    jobTitle: 'Software Engineer',
+    resume: 'resumes/yohannes_desta_resume.pdf',
+    coverLetter: 'Proficient in full-stack development...',
+    appliedDate: '2025-06-15',
+    status: 'rejected',
+    skills: ['Java', 'Spring Boot', 'MySQL'],
+    experience: '0-1 years',
+    education: "Bachelor's Degree in Software Engineering"
+  }
+];
+
 // Mock Dashboard Stats
 export const mockDashboardStats: Record<string, DashboardStats> = {
   employee: {
     attendanceRate: 92,
     leaveBalance: 15,
     overtime: 25,
-    warnings: 0
+    salary: 75000
+   
   },
   hr: {
     totalEmployees: 45,
@@ -308,6 +380,7 @@ export const mockDashboardStats: Record<string, DashboardStats> = {
     openJobs: 5
   }
 };
+
 
 // Helper functions for mock data
 export const getCurrentUser = (role: string): User => {

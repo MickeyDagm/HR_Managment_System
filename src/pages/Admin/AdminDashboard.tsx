@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Briefcase, Settings, Building, TrendingUp, Shield } from 'lucide-react';
+import { Users, Briefcase, Settings, Building, TrendingUp, Shield, HeartPulse, Activity, Network, Send, Repeat, Globe, Database, HardDrive, Folder, Archive, BrainCircuit, Timer, TimerIcon, TimerOff, Clock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { mockDashboardStats } from '../../data/mockData';
 import StatCard from '../../components/UI/StatCard';
@@ -28,25 +28,25 @@ const AdminDashboard: React.FC = () => {
         <StatCard
           title="Active Sessions"
           value={stats.activeEmployees}
-          icon={Shield}
+          icon={Clock}
           color="blue"
         />
         <StatCard
           title="System Health"
           value="98.5%"
-          icon={TrendingUp}
+          icon={Activity}
           color="emerald"
         />
         <StatCard
           title="Storage Used"
           value="2.4 GB"
-          icon={Building}
+          icon={Database}
           color="orange"
         />
         <StatCard
           title="API Requests"
           value="1,234"
-          icon={Settings}
+          icon={Network}
           color="purple"
         />
         <StatCard

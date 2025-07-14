@@ -66,6 +66,7 @@ export interface PayrollRecord {
   netSalary: number;
   bonuses: number;
   penalties: number;
+  status?: 'pending' | 'approved' | 'paid';
 }
 
 export interface JobPosting {
@@ -73,13 +74,16 @@ export interface JobPosting {
   title: string;
   department: string;
   description: string;
-  requirements: string[];
+  experience: string;
+  education: string;
+  educationField: string;
   salary: string;
-  type: 'full-time' | 'part-time' | 'contract' | 'internship';
+  type: 'Permanent' | 'Volunteer' | 'contract' | 'internship';
+  employmentType: "full-time" | "part-time";
   location: string;
   postedDate: string;
   expiryDate: string;
-  status: 'active' | 'closed' | 'draft';
+  status: 'active' | 'closed' | 'draft' | 'pending';
   applicants?: number;
 }
 
@@ -103,5 +107,23 @@ export interface DashboardStats {
   attendanceRate?: number;
   leaveBalance?: number;
   overtime?: number;
-  warnings?: number;
+  salary?: number;
+}
+
+export interface Applicant {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  jobId: string; // References JobPosting.id
+  jobTitle: string; // For display, derived from JobPosting.title
+  resume: string; // URL or file path (mocked as text for simplicity)
+  coverLetter: string;
+  appliedDate: string;
+  status: 'pending' | 'reviewed' | 'interview_scheduled' | 'rejected' | 'hired';
+  skills: string[];
+  experience: string; // e.g., "2-4 years"
+  education: string;
+  interviewDate?: string; // ISO date string for scheduled interview
+  interviewTime?: string; // Time in HH:MM format
 }

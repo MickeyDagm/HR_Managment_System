@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, Calendar, TrendingUp, CheckCircle, XCircle } from 'lucide-react';
+import { Clock, Calendar, TrendingUp, CheckCircle, XCircle, TrendingDown } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { mockAttendanceRecords } from '../../data/mockData';
 import Card from '../../components/UI/Card';
@@ -8,6 +8,8 @@ import StatCard from '../../components/UI/StatCard';
 
 const Attendance: React.FC = () => {
   const { user } = useAuth();
+  // const employeeId = user?.id;
+  // const attendanceRecords = mockAttendanceRecords.filter(r => r.employeeId === employeeId);
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const [checkInTime, setCheckInTime] = useState<string>('');
   
@@ -24,9 +26,8 @@ const Attendance: React.FC = () => {
     setCheckInTime('');
   };
 
-  const currentMonth = new Date().toLocaleString('default', { month: 'long' });
   const totalHours = employeeAttendance.reduce((sum, record) => sum + (record.hoursWorked || 0), 0);
-  const workingDays = 22; // Mock working days in month
+  const workingDays = 22; 
   const attendanceRate = Math.round((employeeAttendance.length / workingDays) * 100);
 
   return (
@@ -81,14 +82,14 @@ const Attendance: React.FC = () => {
         <StatCard
           title="Attendance Rate"
           value={`${attendanceRate}%`}
-          icon={TrendingUp}
-          color="blue"
+          icon={attendanceRate>=30 ? TrendingUp : TrendingDown}
+          color={attendanceRate>=70 ? "emerald" : attendanceRate>=50 ? "blue" : attendanceRate>=30 ? "orange" : "red"}
         />
         <StatCard
           title="Working Days"
           value={`${employeeAttendance.length}/${workingDays}`}
           icon={Calendar}
-          color="orange"
+          color="blue"
         />
       </div>
 

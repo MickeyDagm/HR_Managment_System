@@ -6,8 +6,8 @@ import {
   UserCheck,
   Calendar,
   Briefcase,
-  TrendingUp,
-  Clock
+  Clock,
+  Hourglass,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import {
@@ -18,6 +18,8 @@ import {
 } from '../../data/mockData';
 import StatCard from '../../components/UI/StatCard';
 import Card from '../../components/UI/Card';
+import { NavLink } from 'react-router-dom';
+
 
 const HRDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -58,12 +60,60 @@ const HRDashboard: React.FC = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard title="Total Employees" value={totalEmployees} icon={Users} color="emerald" />
-        <StatCard title="Active Employees" value={activeEmployees} icon={UserCheck} color="blue" />
-        <StatCard title="On Leave Today" value={onLeave} icon={Calendar} color="orange" />
-        <StatCard title="Late Arrivals" value={lateToday} icon={Clock} color="red" />
-        <StatCard title="Pending Requests" value={pendingRequests} icon={TrendingUp} color="purple" />
-        <StatCard title="Open Job Posts" value={openJobs} icon={Briefcase} color="emerald" />
+        <NavLink 
+          to="/employees"
+          >
+          <StatCard title="Total Employees" 
+            value={totalEmployees} 
+            icon={Users} 
+            color="emerald" 
+          />
+        </NavLink>
+        <NavLink 
+          to="/employees"
+          > 
+          <StatCard title="Active Employees" 
+            value={activeEmployees} 
+            icon={UserCheck} 
+            color="blue" 
+          />
+        </NavLink>
+        <NavLink 
+          to="/leave-management"
+          > 
+          <StatCard title="On Leave Today" 
+            value={onLeave} 
+            icon={Calendar} 
+            color="orange" 
+          />
+        </NavLink>
+        <NavLink 
+          to="/attendance-overview"
+          > 
+          <StatCard title="Late Arrivals" 
+            value={lateToday} 
+            icon={Clock} 
+            color="red" 
+          />
+        </NavLink>
+        <NavLink 
+          to="/leave-management"
+          >
+          <StatCard title="Pending Requests" 
+            value={pendingRequests} 
+            icon={Hourglass} 
+            color="purple" 
+          />
+        </NavLink>
+        <NavLink 
+          to="/job-post"
+          >
+          <StatCard title="Open Job Posts" 
+            value={openJobs} 
+            icon={Briefcase} 
+            color="emerald" 
+          />
+        </NavLink>
       </div>
 
       {/* Quick Actions & Recent Activity */}

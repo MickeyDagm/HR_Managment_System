@@ -34,11 +34,11 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleDemoLogin = (demoRole: string, demoEmail: string) => {
-    setRole(demoRole);
-    setEmail(demoEmail);
-    setPassword('password');
-  };
+  // const handleDemoLogin = (demoRole: string, demoEmail: string) => {
+  //   setRole(demoRole);
+  //   setEmail(demoEmail);
+  //   setPassword('password');
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center p-4">
