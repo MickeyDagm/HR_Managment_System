@@ -4,6 +4,7 @@ import { mockEmployees, mockLeaveRequests } from '../../data/mockData';
 import { Employee } from '../../types/index';
 import Button from '../../components/UI/Button';
 import { NavLink } from 'react-router-dom';
+import PageHeader from '../../components/UI/PageHeader';
 
 const EmployeeList: React.FC = () => {
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
@@ -99,9 +100,7 @@ const EmployeeList: React.FC = () => {
 
   return (
     <div className="p-4">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white mb-3">
-        <h1 className="text-2xl font-bold mb-2">Employee List</h1>
-      </div>
+      <PageHeader title="Employee Management" />
 
       <div className="mb-6 bg-white p-4 rounded-lg shadow">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

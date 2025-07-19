@@ -14,7 +14,8 @@ import {
   UserCheck,
   Building,
   Megaphone,
-  CalendarClock
+  CalendarClock,
+  Building2
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -55,10 +56,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     } else if (user?.role === 'admin') {
       return [
         ...baseItems,
-        { path: '/employee-records', icon: Users, label: 'Employee Records' },
-        { path: '/job-postings', icon: Briefcase, label: 'Job Postings' },
-        { path: '/system-controls', icon: Settings, label: 'System Controls' },
-        { path: '/company-settings', icon: Building, label: 'Company Settings' }
+        { path: '/user-records', icon: Users, label: 'User Records' },
+        { path: '/company-records', icon: Building2, label: 'Company Records' },
+        { path: '/job-postings', icon: Briefcase, label: 'Job Postings' }
       ];
     }
 
@@ -87,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {/* Header */}
           <NavLink
            to="/dashboard"
-           className="p-4 bg-gradient-to-r from-emerald-600 to-emerald-700 flex items-center">
+           className="p-4 bg-gradient-to-r from-[#72c02c] to-[#73c03c] flex items-center">
             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
                <img src={logo} alt="logo" className="w-5 h-5 text-emerald-600" />
             </div>

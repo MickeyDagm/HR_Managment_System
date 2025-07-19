@@ -44,8 +44,8 @@ const Attendance: React.FC = () => {
       <Card>
         <div className="text-center py-8">
           <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full mb-4">
-              <Clock className="w-10 h-10 text-emerald-600" />
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-[#def8ca] rounded-full mb-4">
+              <Clock className="w-10 h-10 text-[#72c02c]" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               {isCheckedIn ? 'Checked In' : 'Ready to Check In'}

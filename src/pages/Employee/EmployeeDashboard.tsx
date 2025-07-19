@@ -9,6 +9,7 @@ import {
 import StatCard from '../../components/UI/StatCard';
 import Card from '../../components/UI/Card';
 import { NavLink } from 'react-router-dom';
+import PageHeader from '../../components/UI/PageHeader';
 
 const EmployeeDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -36,10 +37,7 @@ const EmployeeDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Welcome back, {user?.name}!</h1>
-        <p className="text-emerald-100">Here's your latest dashboard overview</p>
-      </div>
+      <PageHeader title={`Welcome back, ${user?.name}!`} description='Here is your latest dashboard overview'/>
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

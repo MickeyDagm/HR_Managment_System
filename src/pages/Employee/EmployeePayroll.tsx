@@ -8,6 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { getPayrollByEmployee } from '../../data/mockData';
 import Card from '../../components/UI/Card';
 import  Button  from '../../components/UI/Button';
+import PageHeader from '../../components/UI/PageHeader';
 
 const EmployeePayroll: React.FC = () => {
   const { user } = useAuth();
@@ -107,10 +108,7 @@ const EmployeePayroll: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Payroll History</h1>
-        <p className="text-emerald-100">Here’s your payroll record, {user?.name}</p>
-      </div>
+      <PageHeader title='Payroll History'/>
 
       <div className="flex justify-between">
         <div className="flex space-x-4">
@@ -130,7 +128,7 @@ const EmployeePayroll: React.FC = () => {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Monthly Breakdown</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
-            <thead className="bg-emerald-600 text-white">
+            <thead className="bg-[#72c02c] text-white">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Month</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Basic Salary</th>

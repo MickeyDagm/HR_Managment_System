@@ -2,16 +2,28 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'employee' | 'hr' | 'admin';
+  role?: 'employee' | 'hr' | 'admin';
+  skills?: string[];
   avatar?: string;
   department?: string;
   position?: string;
   employeeId?: string;
   dateOfHire?: string;
-  status?: 'active' | 'inactive' | 'terminated';
+  status?: 'active' | 'inactive' | 'terminated'|'pending' | 'reviewed' | 'interview_scheduled' | 'rejected' | 'hired';
   salary?: number;
   phone?: string;
   address?: string;
+  companyId?: string; 
+  resume?: string; 
+  coverLetter?: string;
+  appliedDate?: string;
+  jobId?: string; 
+  jobTitle?: string; 
+  experience?: string; 
+  education?: string;
+  interviewDate?: string; 
+  interviewTime?: string; 
+  approved: 'approved' | 'pending' | 'rejected';
 }
 
 export interface Employee extends User {
@@ -22,8 +34,22 @@ export interface Employee extends User {
   status: 'active' | 'inactive' | 'terminated';
   salary: number;
   manager?: string;
-  skills?: string[];
   performanceRating?: number;
+}
+
+
+export interface Applicant  extends User {
+  jobId: string; 
+  jobTitle: string; 
+  resume: string; 
+  coverLetter: string;
+  appliedDate: string;
+  status: 'pending' | 'reviewed' | 'interview_scheduled' | 'rejected' | 'hired';
+  experience: string; 
+  education: string;
+  interviewDate?: string; 
+  interviewTime?: string; 
+  companyId?: string; 
 }
 
 export interface AttendanceRecord {
@@ -85,6 +111,8 @@ export interface JobPosting {
   expiryDate: string;
   status: 'active' | 'closed' | 'draft' | 'pending';
   applicants?: number;
+  companyId?: string;
+  approved: 'approved' | 'pending' | 'rejected' | 'posted';
 }
 
 export interface Notification {
@@ -110,20 +138,12 @@ export interface DashboardStats {
   salary?: number;
 }
 
-export interface Applicant {
+export interface Company {
   id: string;
   name: string;
+  industry: string;
+  location: string;
   email: string;
   phone: string;
-  jobId: string; // References JobPosting.id
-  jobTitle: string; // For display, derived from JobPosting.title
-  resume: string; // URL or file path (mocked as text for simplicity)
-  coverLetter: string;
-  appliedDate: string;
-  status: 'pending' | 'reviewed' | 'interview_scheduled' | 'rejected' | 'hired';
-  skills: string[];
-  experience: string; // e.g., "2-4 years"
-  education: string;
-  interviewDate?: string; // ISO date string for scheduled interview
-  interviewTime?: string; // Time in HH:MM format
+  status: 'active' | 'inactive';
 }

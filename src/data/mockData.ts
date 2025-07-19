@@ -1,4 +1,4 @@
-import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats, Applicant } from '../types';
+import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats, Applicant, Company } from '../types';
 
 // Mock Users
 export const mockUsers: User[] = [
@@ -15,7 +15,9 @@ export const mockUsers: User[] = [
     status: 'active',
     salary: 75000,
     phone: '+251-911-234-567',
-    address: 'Bole Sub City, Addis Ababa, Ethiopia'
+    address: 'Bole Sub City, Addis Ababa, Ethiopia',
+    companyId: "C001",
+    approved: 'approved'
   },
   {
     id: '2',
@@ -30,7 +32,9 @@ export const mockUsers: User[] = [
     status: 'active',
     salary: 85000,
     phone: '+251-911-345-678',
-    address: 'Gerji Kebele, Addis Ababa, Ethiopia'
+    address: 'Gerji Kebele, Addis Ababa, Ethiopia',
+    companyId: "C001",
+    approved: 'approved'
   },
   {
     id: '3',
@@ -45,8 +49,26 @@ export const mockUsers: User[] = [
     status: 'active',
     salary: 90000,
     phone: '+251-911-456-789',
-    address: 'kirkos Sub City, Addis Ababa, Ethiopia'
-  }
+    address: 'kirkos Sub City, Addis Ababa, Ethiopia',
+    approved: 'approved'
+  },
+   {
+    id: '10',
+    name: 'Abebe Kebede',
+    email: 'abebe.kebede@company.com',
+    role: 'employee',
+    avatar: '',
+    department: 'Engineering',
+    position: 'Software Developer',
+    employeeId: 'EMP001',
+    dateOfHire: '2022-01-15',
+    status: 'active',
+    salary: 75000,
+    phone: '+251-911-234-567',
+    address: 'Bole Sub City, Addis Ababa, Ethiopia',
+    companyId: "C001",
+    approved: 'pending'
+  },
 ];
 
 // Mock Employees
@@ -67,7 +89,9 @@ export const mockEmployees: Employee[] = [
     address: 'Bole Sub City, Addis Ababa, Ethiopia',
     manager: 'Mulatu Tesfaye',
     skills: ['React', 'Node.js', 'TypeScript', 'Python'],
-    performanceRating: 4.5
+    performanceRating: 4.5,
+    companyId: "C001",
+    approved: 'approved'
   },
   {
     id: '4',
@@ -85,7 +109,9 @@ export const mockEmployees: Employee[] = [
     address: 'Kality Sub City, Addis Ababa, Ethiopia',
     manager: 'Mulatu Tesfaye',
     skills: ['Digital Marketing', 'SEO', 'Content Creation', 'Analytics'],
-    performanceRating: 4.2
+    performanceRating: 4.2,
+    companyId: "C001",
+    approved: 'approved'
   },
   {
     id: '5',
@@ -103,7 +129,9 @@ export const mockEmployees: Employee[] = [
     address: 'Yeka Sub City, Addis Ababa, Ethiopia',
     manager: 'Mulatu Tesfaye',
     skills: ['Customer Relations', 'Negotiation', 'CRM Software', 'Lead Generation'],
-    performanceRating: 4.0
+    performanceRating: 4.0,
+    companyId: "C002",
+    approved: 'approved'
   },
   {
     id: '5',
@@ -121,7 +149,9 @@ export const mockEmployees: Employee[] = [
     address: 'Arada Sub City, Addis Ababa, Ethiopia',
     manager: 'Mulatu Tesfaye',
     skills: ['Customer Relations', 'Negotiation', 'CRM Software', 'Lead Generation'],
-    performanceRating: 4.0
+    performanceRating: 4.0,
+    companyId: "C002",
+    approved: 'approved'
   }
 ];
 
@@ -237,7 +267,9 @@ export const mockJobPostings: JobPosting[] = [
     postedDate: '2024-01-10',
     expiryDate: '2024-02-10',
     status: 'active',
-    applicants: 15
+    applicants: 15,
+    companyId: 'C001',
+    approved: 'approved'
   },
   {
     id: '2',
@@ -254,7 +286,9 @@ export const mockJobPostings: JobPosting[] = [
     postedDate: '2024-01-12',
     expiryDate: '2024-02-12',
     status: 'active',
-    applicants: 8
+    applicants: 8,
+    companyId: 'C002',
+    approved: 'pending'
   }
 ];
 
@@ -303,7 +337,8 @@ export const mockApplicants: Applicant[] = [
     status: 'pending',
     skills: ['React', 'Node.js', 'TypeScript'],
     experience: '2-4 years',
-    education: "Bachelor's Degree in Computer Science"
+    education: "Bachelor's Degree in Computer Science",
+    approved: 'pending',
   },
   {
     id: '2',
@@ -318,7 +353,8 @@ export const mockApplicants: Applicant[] = [
     status: 'reviewed',
     skills: ['Python', 'SQL', 'Tableau'],
     experience: '3-5 years',
-    education: "Master's Degree in Data Science"
+    education: "Master's Degree in Data Science",
+    approved: 'approved',
   },
   {
     id: '3',
@@ -335,7 +371,8 @@ export const mockApplicants: Applicant[] = [
     experience: '1-3 years',
     education: "Bachelor's Degree in Marketing",
     interviewDate: '2025-07-20',
-    interviewTime: '10:00'
+    interviewTime: '10:00',
+    approved: 'rejected'
   },
   {
     id: '4',
@@ -350,9 +387,32 @@ export const mockApplicants: Applicant[] = [
     status: 'rejected',
     skills: ['Java', 'Spring Boot', 'MySQL'],
     experience: '0-1 years',
-    education: "Bachelor's Degree in Software Engineering"
+    education: "Bachelor's Degree in Software Engineering",
+    approved: 'approved'
   }
 ];
+
+export const mockCompanies: Company[] = [
+  {
+    id: 'C001',
+    name: 'EthioTech Solutions',
+    industry: 'Software Development',
+    location: 'Addis Ababa, Ethiopia',
+    email: 'contact@ethiotech.com',
+    phone: '+251-911-000-111',
+    status: 'active'
+  },
+  {
+    id: 'C002',
+    name: 'Addis Finance PLC',
+    industry: 'Finance',
+    location: 'Addis Ababa, Ethiopia',
+    email: 'info@addisfinance.com',
+    phone: '+251-911-000-222',
+    status: 'active'
+  }
+];
+
 
 // Mock Dashboard Stats
 export const mockDashboardStats: Record<string, DashboardStats> = {
@@ -405,4 +465,41 @@ export const getPayrollByEmployee = (employeeId: string): PayrollRecord[] => {
 
 export const getNotificationsByUser = (userId: string): Notification[] => {
   return mockNotifications.filter(notification => notification.userId === userId);
+};
+
+export const getPendingUsers = (): User[] => {
+  return mockUsers.filter(user => user.approved === 'pending');
+};
+
+export const getPendingJobPosts = (): JobPosting[] => {
+  return mockJobPostings.filter(job => job.approved === 'pending');
+};
+
+export const approveJobPost = (id: string): void => {
+  const job = mockJobPostings.find(j => j.id === id);
+  if (job) job.approved = 'approved';
+};
+
+export const approveEmployee = (id: string): void => {
+  const userIndex = mockUsers.findIndex(user => user.id === id);
+  if (userIndex !== -1) {
+    mockUsers[userIndex] = { ...mockUsers[userIndex], approved: 'approved', status: 'active' };
+    return;
+  }
+  const applicantIndex = mockApplicants.findIndex(applicant => applicant.id === id);
+  if (applicantIndex !== -1) {
+    mockApplicants[applicantIndex] = { ...mockApplicants[applicantIndex], approved: 'approved', status: 'hired' };
+  }
+};
+
+export const rejectEmployee = (id: string): void => {
+  const userIndex = mockUsers.findIndex(user => user.id === id);
+  if (userIndex !== -1) {
+    mockUsers[userIndex] = { ...mockUsers[userIndex], approved: 'rejected', status: 'terminated' };
+    return;
+  }
+  const applicantIndex = mockApplicants.findIndex(applicant => applicant.id === id);
+  if (applicantIndex !== -1) {
+    mockApplicants[applicantIndex] = { ...mockApplicants[applicantIndex], approved: 'rejected', status: 'rejected' };
+  }
 };

@@ -17,6 +17,11 @@ import HRJobPosting from './pages/HR/HRJobPosting';
 import HREmployeeDetails from './pages/HR/HREmployeeDetails';
 import HRRecruitment from './pages/HR/HRRecruitment';
 import HRApplicantDetails from './pages/HR/HRApplicantDetails';
+import AdminUserList from './pages/Admin/AdminUserList';
+import AdminCompanyList from './pages/Admin/AdminCompanyList';
+import AdminJobPosting from './pages/Admin/AdminJobPosting';
+import AdminJobDetail from './pages/Admin/AdminJobDetails';
+import AdminUserDetails from './pages/Admin/AdminUserDetails';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -88,10 +93,12 @@ const App: React.FC = () => {
             <Route path="/applicant-details/:applicantId" element={<HRApplicantDetails />} />
             
             {/* Admin Routes */}
-            <Route path="employee-records" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Employee Records (Admin)</div>} />
-            <Route path="job-postings" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Job Postings (Admin)</div>} />
-            <Route path="system-controls" element={<div className='text-emerald-500 text-2xl font-bold text-center'>System Controls (Admin)</div>} />
-            <Route path="company-settings" element={<div className='text-emerald-500 text-2xl font-bold text-center'>Company Settings (Admin)</div>} />
+            <Route path="user-records" element={<AdminUserList/>} />
+            <Route path="company-records" element={<AdminCompanyList/>} />
+            <Route path="job-postings" element={<AdminJobPosting/>} />
+            <Route path="/job-details/:id" element={<AdminJobDetail />} />
+            <Route path="/user-details/:id" element={<AdminUserDetails />} />
+            
           </Route>
         </Routes>
       </Router>

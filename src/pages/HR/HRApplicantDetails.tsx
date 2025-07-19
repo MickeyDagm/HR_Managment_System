@@ -6,6 +6,7 @@ import { mockApplicants } from '../../data/mockData';
 import { Applicant } from '../../types';
 import Card from '../../components/UI/Card';
 import Button from '../../components/UI/Button';
+import PageHeader from '../../components/UI/PageHeader';
 
 const HRApplicantDetails: React.FC = () => {
   const { user } = useAuth();
@@ -82,9 +83,9 @@ const HRApplicantDetails: React.FC = () => {
   if (!applicant) {
     return (
       <div className="space-y-6">
-        <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-r from-[#72c02c] to-[#72c02c] rounded-xl p-6 text-white">
           <h1 className="text-2xl font-bold mb-2">Applicant Details</h1>
-          <p className="text-emerald-100">Loading applicant data...</p>
+          <p className="text-[#72c02c]">Loading applicant data...</p>
         </div>
       </div>
     );
@@ -94,9 +95,7 @@ const HRApplicantDetails: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Applicant Details</h1>
-      </div>
+      <PageHeader title='Applicants Details'/>
 
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h2>
@@ -142,7 +141,7 @@ const HRApplicantDetails: React.FC = () => {
           <div className="md:col-span-2">
             <h3 className="text-sm font-medium text-gray-700">Resume</h3>
             <p className="text-gray-900">
-              <a href={applicant.resume} target="_blank" rel="noopener noreferrer" className="text-emerald-500 hover:underline">
+              <a href={applicant.resume} target="_blank" rel="noopener noreferrer" className="text-[#72c02c] hover:underline">
                 View Resume
               </a>
             </p>
@@ -157,10 +156,10 @@ const HRApplicantDetails: React.FC = () => {
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Skills</h2>
         <div className="flex flex-wrap gap-2">
-          {applicant.skills.map((skill, index) => (
+          {applicant.skills?.map((skill, index) => (
             <span
               key={index}
-              className="inline-block bg-emerald-100 text-emerald-800 text-sm font-medium px-2.5 py-0.5 rounded"
+              className="inline-block bg-[#72c02c] text-white text-sm font-medium px-2.5 py-0.5 rounded"
             >
               {skill}
             </span>
@@ -179,7 +178,7 @@ const HRApplicantDetails: React.FC = () => {
               value={interviewForm.date}
               onChange={handleInterviewInputChange}
               disabled={isFinalStatus}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c] disabled:bg-gray-100"
             />
           </div>
           <div>
@@ -190,7 +189,7 @@ const HRApplicantDetails: React.FC = () => {
               value={interviewForm.time}
               onChange={handleInterviewInputChange}
               disabled={isFinalStatus}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c] disabled:bg-gray-100"
             />
           </div>
         </div>
@@ -198,7 +197,7 @@ const HRApplicantDetails: React.FC = () => {
           <Button
             onClick={handleScheduleInterview}
             disabled={isFinalStatus}
-            className="bg-emerald-500 hover:bg-emerald-600 text-white focus:ring-emerald-600 disabled:bg-gray-400"
+            className="bg-[#72c02c] hover:bg-[#72c02c] text-white focus:ring-[#72c02c] disabled:bg-gray-400"
           >
             Schedule Interview
           </Button>

@@ -7,6 +7,7 @@ import { mockLeaveRequests } from '../../data/mockData';
 import { LeaveRequest } from '../../types';
 import Card from '../../components/UI/Card';
 import Button from '../../components/UI/Button';
+import PageHeader from '../../components/UI/PageHeader';
 
 const HRLeaveManagement: React.FC = () => {
   const { user } = useAuth();
@@ -88,33 +89,17 @@ const HRLeaveManagement: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Leave Request Management</h1>
-      </div>
+      <PageHeader title='Leave Request Management'/>
 
       <div className="bg-white p-4 rounded-lg shadow">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Employee</label>
-            <select
-              name="employeeId"
-              value={filters.employeeId}
-              onChange={handleFilterChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
-            >
-              <option value="">All Employees</option>
-              {employees.map(emp => (
-                <option key={emp.id} value={emp.id}>{emp.name}</option>
-              ))}
-            </select>
-          </div> */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
             <select
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
             >
               <option value="">All Statuses</option>
               {uniqueStatuses.map(status => (
@@ -128,7 +113,7 @@ const HRLeaveManagement: React.FC = () => {
               name="type"
               value={filters.type}
               onChange={handleFilterChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
             >
               <option value="">All Types</option>
               {uniqueTypes.map(type => (
@@ -150,7 +135,7 @@ const HRLeaveManagement: React.FC = () => {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Leave Requests</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
-            <thead className="bg-emerald-600 text-white">
+            <thead className="bg-[#72c02c] text-white">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Employee</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Type</th>
@@ -180,7 +165,7 @@ const HRLeaveManagement: React.FC = () => {
                     {req.status === 'pending' && (
                       <div className="flex space-x-2">
                         <Button
-                          className="bg-emerald-500 hover:bg-emerald-600 text-white focus:ring-emerald-600"
+                          className="bg-[#72c02c] hover:bg-[#72c02c] text-white focus:ring-[#72c02c]"
                           size="sm"
                           onClick={() => handleAction(req.id, 'approved', 'Approved by HR')}
                         >
@@ -214,7 +199,7 @@ const HRLeaveManagement: React.FC = () => {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Employees Currently on Leave</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
-            <thead className="bg-emerald-600 text-white">
+            <thead className="bg-[#72c02c] text-white">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Employee</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Type</th>

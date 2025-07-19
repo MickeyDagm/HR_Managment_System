@@ -6,6 +6,7 @@ import { mockEmployees, mockLeaveRequests } from '../../data/mockData';
 import { Employee, LeaveRequest } from '../../types';
 import Card from '../../components/UI/Card';
 import userLogo from '../../assets/user_logo.jpg';
+import PageHeader from '../../components/UI/PageHeader';
 
 const HREmployeeDetails: React.FC = () => {
   const { user } = useAuth();
@@ -61,9 +62,9 @@ const HREmployeeDetails: React.FC = () => {
   if (!employee) {
     return (
       <div className="space-y-6">
-        <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-r from-[#72c02c] to-[#72c02c] rounded-xl p-6 text-white">
           <h1 className="text-2xl font-bold mb-2">Employee Details</h1>
-          <p className="text-emerald-100">Loading employee data...</p>
+          <p className="text-[#72c02c]">Loading employee data...</p>
         </div>
       </div>
     );
@@ -75,11 +76,7 @@ const HREmployeeDetails: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Employee Details</h1>
-        {/* <p className="text-emerald-100">Viewing details for {employee.name}, {user?.name}</p> */}
-      </div>
-
+      <PageHeader title='Employee Details'/>
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-6">Personal Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
@@ -161,7 +158,7 @@ const HREmployeeDetails: React.FC = () => {
           {employee.skills?.map((skill, index) => (
             <span
               key={index}
-              className="inline-block bg-emerald-100 text-emerald-800 text-sm font-medium px-2.5 py-0.5 rounded"
+              className="inline-block bg-[#72c02c] text-white text-sm font-medium px-2.5 py-0.5 rounded"
             >
               {skill}
             </span>
@@ -179,7 +176,7 @@ const HREmployeeDetails: React.FC = () => {
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">All Statuses</option>
                 {uniqueStatuses.map(status => (
@@ -193,7 +190,7 @@ const HREmployeeDetails: React.FC = () => {
                 name="type"
                 value={filters.type}
                 onChange={handleFilterChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">All Types</option>
                 {uniqueTypes.map(type => (
@@ -205,7 +202,7 @@ const HREmployeeDetails: React.FC = () => {
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
-            <thead className="bg-emerald-600 text-white">
+            <thead className="bg-[#72c02c] text-white">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Type</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Start Date</th>

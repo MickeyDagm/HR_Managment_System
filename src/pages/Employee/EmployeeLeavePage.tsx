@@ -5,6 +5,7 @@ import Button from '../../components/UI/Button';
 import { useAuth } from '../../contexts/AuthContext';
 import { mockLeaveRequests } from '../../data/mockData';
 import { LeaveRequest } from '../../types';
+import PageHeader from '../../components/UI/PageHeader';
 
 const EmployeeLeavePage: React.FC = () => {
   const { user } = useAuth();
@@ -62,10 +63,7 @@ const EmployeeLeavePage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Leave Management</h1>
-        <p className="text-blue-100">Submit and track your leave requests</p>
-      </div>
+      <PageHeader title='Leave Management'/>'
 
       {/* Apply for Leave */}
       <Card>

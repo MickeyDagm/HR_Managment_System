@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
                 alt={user?.name}
                 className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
               />
-              <button className="absolute bottom-0 right-0 bg-emerald-600 text-white p-2 rounded-full hover:bg-emerald-700">
+              <button className="absolute bottom-0 right-0 bg-[#72c02c] text-white p-2 rounded-full hover:bg-[#72c02c]">
                 <Camera className="w-4 h-4" />
               </button>
             </div>
@@ -128,7 +128,7 @@ const Profile: React.FC = () => {
               type="text"
               value={editData.name}
               onChange={(e) => setEditData({...editData, name: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#72c02c]"
             />
           </div>
           <div>
@@ -139,7 +139,7 @@ const Profile: React.FC = () => {
               type="email"
               value={editData.email}
               onChange={(e) => setEditData({...editData, email: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#72c02c]"
             />
           </div>
           <div>
@@ -150,7 +150,7 @@ const Profile: React.FC = () => {
               type="tel"
               value={editData.phone}
               onChange={(e) => setEditData({...editData, phone: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#72c02c]"
             />
           </div>
           <div>
@@ -160,7 +160,7 @@ const Profile: React.FC = () => {
             <textarea
               value={editData.address}
               onChange={(e) => setEditData({...editData, address: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#72c02c]"
               rows={3}
             />
           </div>

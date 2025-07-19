@@ -19,6 +19,7 @@ import {
 import StatCard from '../../components/UI/StatCard';
 import Card from '../../components/UI/Card';
 import { NavLink } from 'react-router-dom';
+import PageHeader from '../../components/UI/PageHeader';
 
 
 const HRDashboard: React.FC = () => {
@@ -51,12 +52,7 @@ const HRDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">HR Dashboard</h1>
-        <p className="text-emerald-100">
-          Welcome, {user?.name}! 
-        </p>
-      </div>
+      <PageHeader title={`Welcome, ${user?.name}!`}/>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

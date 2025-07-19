@@ -5,6 +5,7 @@ import { mockJobPostings, mockEmployees } from '../../data/mockData';
 import { JobPosting } from '../../types';
 import Card from '../../components/UI/Card';
 import Button from '../../components/UI/Button';
+import PageHeader from '../../components/UI/PageHeader';
 
 const HRJobPosting: React.FC = () => {
   const { user } = useAuth();
@@ -95,7 +96,9 @@ const HRJobPosting: React.FC = () => {
       postedDate: new Date().toISOString().split('T')[0],
       expiryDate: formData.deadline,
       status: 'pending',
-      applicants: 0
+      applicants: 0,
+      companyId: user?.companyId,
+      approved: "pending"
     };
 
     setJobPostings([...jobPostings, newJob]);
@@ -123,9 +126,7 @@ const HRJobPosting: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Job Post Management</h1>
-      </div>
+      <PageHeader title='Job Post Management'/>
 
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Job Postings</h2>
@@ -137,7 +138,7 @@ const HRJobPosting: React.FC = () => {
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">All Statuses</option>
                 {statuses.map(status => (
@@ -151,7 +152,7 @@ const HRJobPosting: React.FC = () => {
                 name="department"
                 value={filters.department}
                 onChange={handleFilterChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">All Departments</option>
                 {departments.map(dept => (
@@ -164,7 +165,7 @@ const HRJobPosting: React.FC = () => {
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
-            <thead className="bg-emerald-600 text-white">
+            <thead className="bg-[#72c02c] text-white">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Position</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Department</th>
@@ -216,7 +217,7 @@ const HRJobPosting: React.FC = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
                 placeholder="e.g., Software Engineer"
               />
             </div>
@@ -227,7 +228,7 @@ const HRJobPosting: React.FC = () => {
                 name="deadline"
                 value={formData.deadline}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               />
             </div>
             <div className="md:col-span-2">
@@ -236,7 +237,7 @@ const HRJobPosting: React.FC = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
                 rows={4}
                 placeholder="Describe the job responsibilities and requirements"
               />
@@ -248,7 +249,7 @@ const HRJobPosting: React.FC = () => {
                 name="city"
                 value={formData.city}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
                 placeholder="e.g., Addis Ababa"
               />
             </div>
@@ -259,7 +260,7 @@ const HRJobPosting: React.FC = () => {
                 name="country"
                 value={formData.country}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
                 placeholder="e.g., Ethiopia"
               />
             </div>
@@ -269,7 +270,7 @@ const HRJobPosting: React.FC = () => {
                 name="experienceRange"
                 value={formData.experienceRange}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">Select Experience Range</option>
                 <option value="0-1">0-1 years</option>
@@ -284,7 +285,7 @@ const HRJobPosting: React.FC = () => {
                 name="department"
                 value={formData.department}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">Select department</option>
                 {departments.map(dept => (
@@ -298,7 +299,7 @@ const HRJobPosting: React.FC = () => {
                   name="customCategory"
                   value={formData.customCategory}
                   onChange={handleInputChange}
-                  className="mt-2 w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                  className="mt-2 w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
                   placeholder="Enter custom category"
                 />
               )}
@@ -309,7 +310,7 @@ const HRJobPosting: React.FC = () => {
                 name="educationLevel"
                 value={formData.educationLevel}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">Select Education Level</option>
                 <option value="High School">High School</option>
@@ -325,7 +326,7 @@ const HRJobPosting: React.FC = () => {
                 name="fieldOfStudy"
                 value={formData.fieldOfStudy}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
                 placeholder="e.g., Computer Science"
               />
             </div>
@@ -335,7 +336,7 @@ const HRJobPosting: React.FC = () => {
                 name="type"
                 value={formData.type}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">Select Type of Work</option>
                 <option value="Permanent">Permanent</option>
@@ -350,7 +351,7 @@ const HRJobPosting: React.FC = () => {
                 name="employmentType"
                 value={formData.employmentType}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               >
                 <option value="">Select Employment Type</option>
                 <option value="full-time">Full-time</option>
@@ -364,13 +365,13 @@ const HRJobPosting: React.FC = () => {
                 name="salary"
                 value={formData.salary}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
                 placeholder="e.g., ETB 60,000 - 80,000"
               />
             </div>
           </div>
           <div className="mt-4">
-            <Button onClick={handlePreview} className="bg-emerald-500 hover:bg-emerald-600 text-white focus:ring-emerald-600">
+            <Button onClick={handlePreview} className="bg-[#72c02c] hover:bg-[#72c02c] text-white focus:ring-[#72c02c]">
               Watch Preview
             </Button>
           </div>
@@ -432,7 +433,7 @@ const HRJobPosting: React.FC = () => {
             <Button onClick={() => setShowPreview(false)} className="bg-gray-500 hover:bg-gray-600 text-white focus:ring-gray-600">
               Back to Edit
             </Button>
-            <Button onClick={handleRequestPost} className="bg-emerald-500 hover:bg-emerald-600 text-white focus:ring-emerald-600">
+            <Button onClick={handleRequestPost} className="bg-[#72c02c] hover:bg-[#72c02c] text-white focus:ring-[#72c02c]">
               Request to Post
             </Button>
           </div>

@@ -7,6 +7,7 @@ import { mockPayrollRecords, mockEmployees } from '../../data/mockData';
 import Card from '../../components/UI/Card';
 import Button from '../../components/UI/Button';
 import { PayrollRecord } from '../../types';
+import PageHeader from '../../components/UI/PageHeader';
 
 const HRPayroll: React.FC = () => {
   const { user } = useAuth();
@@ -84,10 +85,7 @@ const HRPayroll: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Payroll Management</h1>
-        {/* <p className="text-emerald-100">Manage employee payrolls, {user?.name}</p> */}
-      </div>
+      <PageHeader title='Payroll Management'/>
 
       <div className="flex justify-between">
         <div className="flex space-x-4">
@@ -109,7 +107,7 @@ const HRPayroll: React.FC = () => {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Payroll Records</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
-            <thead className="bg-emerald-600 text-white">
+            <thead className="bg-[#72c02c] text-white">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Employee</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Month</th>
@@ -142,7 +140,7 @@ const HRPayroll: React.FC = () => {
                   <td className="px-4 py-3 text-sm">
                     {record.status !== 'approved' && (
                       <Button
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white focus:ring-emerald-600"
+                        className="bg-[#72c02c] hover:bg-[#72c02c] text-white focus:ring-[#72c02c]"
                         onClick={() => handleApprovePayment(record.id)}
                       >
                         Approve

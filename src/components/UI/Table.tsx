@@ -10,7 +10,7 @@ const Table: React.FC<TableProps> = ({ headers, children, className = '' }) => {
   return (
     <div className={`overflow-x-auto ${className}`}>
       <table className="min-w-full bg-white rounded-lg">
-        <thead className="bg-gradient-to-r from-emerald-600 to-emerald-700">
+        <thead className="bg-gradient-to-r from-[#72c02c] to-[#72c02c]">
           <tr>
             {headers.map((header, index) => (
               <th

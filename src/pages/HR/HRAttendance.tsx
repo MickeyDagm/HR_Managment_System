@@ -6,6 +6,7 @@ import { mockAttendanceRecords, mockEmployees } from '../../data/mockData';
 import { AttendanceRecord } from '../../types';
 import Card from '../../components/UI/Card';
 import Button from '../../components/UI/Button';
+import PageHeader from '../../components/UI/PageHeader';
 
 const HRAttendance: React.FC = () => {
   const [filters, setFilters] = useState({
@@ -75,34 +76,17 @@ const HRAttendance: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">Attendance Management</h1>
-        {/* <p className="text-emerald-100">Manage employee attendance records, {user?.name}</p> */}
-      </div>
+      <PageHeader title="Attendance Management" />
 
       <div className="bg-white p-4 rounded-lg shadow">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Employee</label>
-            <select
-              name="employeeId"
-              value={filters.employeeId}
-              onChange={handleFilterChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
-            >
-              <option value="">All Employees</option>
-              {employees.map(emp => (
-                <option key={emp.id} value={emp.id}>{emp.name}</option>
-              ))}
-            </select>
-          </div> */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
             <select
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
             >
               <option value="">All Statuses</option>
               {uniqueStatuses.map(status => (
@@ -117,7 +101,7 @@ const HRAttendance: React.FC = () => {
               name="startDate"
               value={filters.startDate}
               onChange={handleFilterChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
             />
           </div>
           <div>
@@ -127,7 +111,7 @@ const HRAttendance: React.FC = () => {
               name="endDate"
               value={filters.endDate}
               onChange={handleFilterChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
             />
           </div>
         </div>
@@ -143,7 +127,7 @@ const HRAttendance: React.FC = () => {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Attendance Records</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
-            <thead className="bg-emerald-600 text-white">
+            <thead className="bg-[#72c02c] text-white">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Employee</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Date</th>

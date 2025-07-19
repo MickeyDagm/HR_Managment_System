@@ -22,7 +22,7 @@ const StatCard: React.FC<StatCardProps> = ({
   className = ''
 }) => {
   const colorClasses = {
-    emerald: 'bg-emerald-50 text-emerald-600 border-emerald-200',
+    emerald: 'bg-[#def8ca] text-[#72c02c] border-[#aadf8a]',
     blue: 'bg-blue-50 text-blue-600 border-blue-200',
     orange: 'bg-orange-50 text-orange-600 border-orange-200',
     red: 'bg-red-50 text-red-600 border-red-200',

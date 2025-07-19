@@ -4,6 +4,7 @@ import { mockApplicants, mockJobPostings } from '../../data/mockData';
 import { Applicant } from '../../types';
 import Table from '../../components/UI/Table';
 import Button from '../../components/UI/Button';
+import PageHeader from '../../components/UI/PageHeader';
 
 const HRRecruitment: React.FC = () => {
   const [filteredApplicants, setFilteredApplicants] = useState<Applicant[]>([]);
@@ -56,9 +57,7 @@ const HRRecruitment: React.FC = () => {
 
   return (
     <div className="p-4">
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-6 text-white mb-3">
-        <h1 className="text-2xl font-bold mb-2">Recruitment Management</h1>
-      </div>
+      <PageHeader title='Recruitment Management'/>
 
       <div className="mb-6 bg-white p-4 rounded-lg shadow">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
