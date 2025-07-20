@@ -6,7 +6,8 @@ import {
   mockJobPostings,
   mockCompanies,
   getPendingUsers,
-  getPendingJobPosts
+  getPendingJobPosts,
+  mockApplicants
 } from '../../data/mockData';
 import StatCard from '../../components/UI/StatCard';
 import Card from '../../components/UI/Card';
@@ -16,7 +17,7 @@ import PageHeader from '../../components/UI/PageHeader';
 const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
 
-  const totalEmployees = mockEmployees.length;
+  const totalEmployees = mockEmployees.length + mockApplicants.length;
   const totalCompanies = mockCompanies.length;
   const pendingAprovalUsers = getPendingUsers().length;
   const totalJobPosts = mockJobPostings.length;
@@ -31,11 +32,11 @@ const AdminDashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <NavLink
           to="/user-records">
-            <StatCard title="Total Employees" value={totalEmployees} icon={Users} color="emerald" />
+            <StatCard title="Total users" value={totalEmployees} icon={Users} color="emerald" />
         </NavLink>
         <NavLink
           to="/user-record">
-            <StatCard title="Pending Employee Approval" value={pendingAprovalUsers} icon={Hourglass} color="purple" />
+            <StatCard title="Pending User Approval" value={pendingAprovalUsers} icon={Hourglass} color="purple" />
         </NavLink>
         <NavLink
           to="/company-records">

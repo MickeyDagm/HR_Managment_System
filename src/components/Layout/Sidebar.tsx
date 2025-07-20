@@ -122,7 +122,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     className={({ isActive }) =>
                       `flex items-center px-3 py-3 rounded-lg transition-all duration-200 group/item relative ${
                         isActive
-                          ? 'bg-emerald-100 text-emerald-700'
+                          ? 'bg-[#def8ca] text-[#72c02c]'
                           : 'text-gray-700 hover:bg-gray-100'
                       }`
                     }
