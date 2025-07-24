@@ -11,7 +11,10 @@ import PageHeader from '../../components/UI/PageHeader';
 
 const HRPayroll: React.FC = () => {
   const { user } = useAuth();
-  const [payrolls, setPayrolls] = useState<PayrollRecord[]>(mockPayrollRecords);
+  // Add daysWorked to each payroll record with a default value of 22 (typical working days per month)
+  const [payrolls, setPayrolls] = useState<PayrollRecord[]>(
+    mockPayrollRecords.map(record => ({ ...record, daysWorked: 22 }))
+  );
 
   const handleApprovePayment = (payrollId: string) => {
     setPayrolls(payrolls.map(record => 
@@ -30,9 +33,10 @@ const HRPayroll: React.FC = () => {
 
     autoTable(doc, {
       startY: 30,
-      head: [['Employee', 'Basic Salary', 'Allowances', 'Overtime', 'Bonuses', 'Deductions', 'Taxes', 'Penalties', 'Net Salary', 'Status']],
+      head: [['Employee', 'Days Worked', 'Basic Salary', 'Allowances', 'Overtime', 'Bonuses', 'Deductions', 'Taxes', 'Penalties', 'Net Salary', 'Status']],
       body: monthlyPayrolls.map(p => [
         p.employeeName,
+        p.daysWorked,
         `ETB ${p.basicSalary.toLocaleString()}`,
         `ETB ${p.allowances.toLocaleString()}`,
         `ETB ${p.overtime.toLocaleString()}`,
@@ -59,10 +63,11 @@ const HRPayroll: React.FC = () => {
 
     autoTable(doc, {
       startY: 30,
-      head: [['Employee', 'Month', 'Basic Salary', 'Allowances', 'Overtime', 'Bonuses', 'Deductions', 'Taxes', 'Penalties', 'Net Salary', 'Status']],
+      head: [['Employee', 'Month', 'Days Worked', 'Basic Salary', 'Allowances', 'Overtime', 'Bonuses', 'Deductions', 'Taxes', 'Penalties', 'Net Salary', 'Status']],
       body: payrolls.map(p => [
         p.employeeName,
         `${p.month} ${p.year}`,
+        p.daysWorked,
         `ETB ${p.basicSalary.toLocaleString()}`,
         `ETB ${p.allowances.toLocaleString()}`,
         `ETB ${p.overtime.toLocaleString()}`,
@@ -111,6 +116,7 @@ const HRPayroll: React.FC = () => {
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Employee</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Month</th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">Days Worked</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Basic Salary</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Allowances</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold">Overtime</th>
@@ -128,6 +134,7 @@ const HRPayroll: React.FC = () => {
                 <tr key={record.id}>
                   <td className="px-4 py-3 text-sm text-gray-700">{record.employeeName}</td>
                   <td className="px-4 py-3 text-sm text-gray-700">{record.month} {record.year}</td>
+                  <td className="px-4 py-3 text-sm text-gray-700">{record.daysWorked}</td>
                   <td className="px-4 py-3 text-sm text-gray-700">ETB {record.basicSalary.toLocaleString()}</td>
                   <td className="px-4 py-3 text-sm text-gray-700">ETB {record.allowances.toLocaleString()}</td>
                   <td className="px-4 py-3 text-sm text-gray-700">ETB {record.overtime.toLocaleString()}</td>
@@ -151,7 +158,7 @@ const HRPayroll: React.FC = () => {
               ))}
               {payrolls.length === 0 && (
                 <tr>
-                  <td colSpan={12} className="px-4 py-3 text-center text-sm text-gray-500">
+                  <td colSpan={13} className="px-4 py-3 text-center text-sm text-gray-500">
                     No payroll records available.
                   </td>
                 </tr>

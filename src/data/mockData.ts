@@ -1,4 +1,4 @@
-import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats, Applicant, Company } from '../types';
+import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats, Applicant, Company, Message } from '../types';
 
 // Mock Users
 export const mockUsers: User[] = [
@@ -54,12 +54,12 @@ export const mockUsers: User[] = [
   },
    {
     id: '10',
-    name: 'Abebe Kebede',
-    email: 'abebe.kebede@company.com',
-    role: 'employee',
+    name: 'Yonas Andualem',
+    email: 'yonas.andualem@company.com',
+    role: 'owner',
     avatar: '',
-    department: 'Engineering',
-    position: 'Software Developer',
+    department: '',
+    position: 'Owner',
     employeeId: 'EMP001',
     dateOfHire: '2022-01-15',
     status: 'active',
@@ -231,7 +231,8 @@ export const mockPayrollRecords: PayrollRecord[] = [
     taxes: 15000,
     netSalary: 65500,
     bonuses: 3000,
-    penalties: 0
+    penalties: 0,
+    daysWorked: 22
   },
   {
     id: '2',
@@ -246,7 +247,8 @@ export const mockPayrollRecords: PayrollRecord[] = [
     taxes: 12000,
     netSalary: 57300,
     bonuses: 2000,
-    penalties: 0
+    penalties: 0,
+    daysWorked: 20
   }
 ];
 
@@ -413,6 +415,49 @@ export const mockCompanies: Company[] = [
   }
 ];
 
+export const mockMessages: Message[] = [
+  {
+    id: '1',
+    senderId: '1',
+    receiverId: '2',
+    content: 'Hi Mulatu, can we discuss my leave request?',
+    timestamp: '2025-07-23T10:00:00Z',
+    read: false
+  },
+  {
+    id: '2',
+    senderId: '2',
+    receiverId: '1',
+    content: 'Sure, Abebe. Let us schedule a meeting for tomorrow.',
+    timestamp: '2025-07-23T10:05:00Z',
+    read: true
+  },
+  {
+    id: '3',
+    senderId: '1',
+    receiverId: '2',
+    content: 'Great, what time works for you?',
+    timestamp: '2025-07-23T10:10:00Z',
+    read: false
+  },
+  {
+    id: '4',
+    senderId: '4',
+    receiverId: '2',
+    content: 'Hello, I need to update some payroll information.',
+    timestamp: '2025-07-23T11:00:00Z',
+    read: false
+  },
+  {
+    id: '5',
+    senderId: '2',
+    receiverId: '4',
+    content: 'Hi Helen, please send me the details.',
+    timestamp: '2025-07-23T11:05:00Z',
+    read: true
+  }
+];
+
 
 // Mock Dashboard Stats
 export const mockDashboardStats: Record<string, DashboardStats> = {
@@ -502,4 +547,8 @@ export const rejectEmployee = (id: string): void => {
   if (applicantIndex !== -1) {
     mockApplicants[applicantIndex] = { ...mockApplicants[applicantIndex], approved: 'rejected', status: 'rejected' };
   }
+};
+
+export const getMessagesByUser = (userId: string): Message[] => {
+  return mockMessages.filter(message => message.senderId === userId || message.receiverId === userId);
 };

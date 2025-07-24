@@ -32,6 +32,27 @@ const HRJobPosting: React.FC = () => {
   });
   const [showPreview, setShowPreview] = useState(false);
 
+  // Predefined country and city options
+  const countryOptions = ['Ethiopia', 'Uganda', 'Rwanda', 'Kenya'];
+  const cityOptions: { [key: string]: string[] } = {
+    Ethiopia: ['Addis Ababa', 'Adama', 'Gondar', 'Bahir Dar'],
+    Uganda: ['Kampala', 'Gulu', 'Mbarara', 'Jinja'],
+    Rwanda: ['Kigali', 'Gisenyi', 'Ruhengeri', 'Butare'],
+    Kenya: ['Nairobi', 'Mombasa', 'Kisumu', 'Eldoret']
+  };
+
+  // Predefined field of study options
+  const fieldOfStudyOptions = [
+    'Computer Science',
+    'Engineering',
+    'Business Administration',
+    'Medicine',
+    'Law',
+    'Education',
+    'Economics',
+    'Custom'
+  ];
+
   useEffect(() => {
     let result = [...jobPostings];
 
@@ -49,7 +70,12 @@ const HRJobPosting: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    // Reset city when country changes
+    if (name === 'country') {
+      setFormData(prev => ({ ...prev, country: value, city: '' }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -243,26 +269,33 @@ const HRJobPosting: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
-                placeholder="e.g., Addis Ababa"
-              />
-            </div>
-            <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-              <input
-                type="text"
+              <select
                 name="country"
                 value={formData.country}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
-                placeholder="e.g., Ethiopia"
-              />
+              >
+                <option value="">Select Country</option>
+                {countryOptions.map(country => (
+                  <option key={country} value={country}>{country}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+              <select
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
+                disabled={!formData.country}
+              >
+                <option value="">Select City</option>
+                {formData.country && cityOptions[formData.country]?.map(city => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Experience Range</label>
@@ -321,14 +354,28 @@ const HRJobPosting: React.FC = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Field of Study</label>
-              <input
-                type="text"
-                name="fieldOfStudy"
-                value={formData.fieldOfStudy}
-                onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
-                placeholder="e.g., Computer Science"
-              />
+              {formData.fieldOfStudy === 'Custom' ? (
+                <input
+                  type="text"
+                  name="fieldOfStudy"
+                  value={formData.fieldOfStudy}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
+                  placeholder="Enter custom field of study"
+                />
+              ) : (
+                <select
+                  name="fieldOfStudy"
+                  value={formData.fieldOfStudy}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
+                >
+                  <option value="">Select Field of Study</option>
+                  {fieldOfStudyOptions.map(field => (
+                    <option key={field} value={field}>{field}</option>
+                  ))}
+                </select>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Type of Work</label>
@@ -359,14 +406,14 @@ const HRJobPosting: React.FC = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Salary Range</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Salary</label>
               <input
                 type="text"
                 name="salary"
                 value={formData.salary}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
-                placeholder="e.g., ETB 60,000 - 80,000"
+                placeholder=""
               />
             </div>
           </div>
@@ -390,16 +437,16 @@ const HRJobPosting: React.FC = () => {
                 <p className="text-gray-900">{formData.deadline}</p>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700">Description</h3>
-                <p className="text-gray-900">{formData.description}</p>
-              </div>
-              <div>
                 <h3 className="text-sm font-medium text-gray-700">Location</h3>
                 <p className="text-gray-900">{formData.city}, {formData.country}</p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-gray-700">Experience Range</h3>
                 <p className="text-gray-900">{formData.experienceRange} years</p>
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-gray-700">Description</h3>
+                <p className="text-gray-900">{formData.description}</p>
               </div>
             </div>
             <div className="space-y-4">
@@ -424,7 +471,7 @@ const HRJobPosting: React.FC = () => {
                 <p className="text-gray-900">{formData.employmentType}</p>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700">Salary Range</h3>
+                <h3 className="text-sm font-medium text-gray-700">Salary</h3>
                 <p className="text-gray-900">{formData.salary}</p>
               </div>
             </div>

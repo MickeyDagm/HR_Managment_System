@@ -2,7 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role?: 'employee' | 'hr' | 'admin';
+  role?: 'employee' | 'hr' | 'admin' | 'owner';
   skills?: string[];
   avatar?: string;
   department?: string;
@@ -92,6 +92,7 @@ export interface PayrollRecord {
   netSalary: number;
   bonuses: number;
   penalties: number;
+  daysWorked: number;
   status?: 'pending' | 'approved' | 'paid';
 }
 
@@ -146,4 +147,13 @@ export interface Company {
   email: string;
   phone: string;
   status: 'active' | 'inactive';
+}
+
+export interface Message {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  timestamp: string;
+  read: boolean;
 }

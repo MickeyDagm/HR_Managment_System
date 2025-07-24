@@ -22,6 +22,7 @@ import AdminCompanyList from './pages/Admin/AdminCompanyList';
 import AdminJobPosting from './pages/Admin/AdminJobPosting';
 import AdminJobDetail from './pages/Admin/AdminJobDetails';
 import AdminUserDetails from './pages/Admin/AdminUserDetails';
+import OwnerEmployeeList from './pages/Owner/OwnerEmployeeList';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -98,6 +99,9 @@ const App: React.FC = () => {
             <Route path="job-postings" element={<AdminJobPosting/>} />
             <Route path="/job-details/:id" element={<AdminJobDetail />} />
             <Route path="/user-details/:id" element={<AdminUserDetails />} />
+          
+            {/*Owner Routes*/}
+            <Route path='/owner-emp-list' element={<OwnerEmployeeList/>}/>
             
           </Route>
         </Routes>

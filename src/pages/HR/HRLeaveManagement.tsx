@@ -18,9 +18,11 @@ const HRLeaveManagement: React.FC = () => {
     type: ''
   });
   const [filteredRequests, setFilteredRequests] = useState<LeaveRequest[]>(mockLeaveRequests);
+  const [rejectModal, setRejectModal] = useState<{ isOpen: boolean; requestId: string | null }>({ isOpen: false, requestId: null });
+  const [rejectReason, setRejectReason] = useState('');
 
   useEffect(() => {
-    let result = [...mockLeaveRequests];
+    let result = [...leaveRequests];
 
     if (filters.employeeId) {
       result = result.filter(req => req.employeeId === filters.employeeId);
@@ -33,7 +35,7 @@ const HRLeaveManagement: React.FC = () => {
     }
 
     setFilteredRequests(result);
-  }, [filters]);
+  }, [filters, leaveRequests]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -47,6 +49,34 @@ const HRLeaveManagement: React.FC = () => {
         : req
     ));
     toast.success(`Leave request ${action} successfully`);
+    if (action === 'rejected') {
+      setRejectModal({ isOpen: false, requestId: null });
+      setRejectReason('');
+    }
+  };
+
+  const openRejectModal = (requestId: string) => {
+    setRejectModal({ isOpen: true, requestId });
+    setRejectReason('');
+  };
+
+  const handleRejectSubmit = () => {
+    if (rejectModal.requestId) {
+      if (!rejectReason.trim()) {
+        toast.error('Please enter or select a rejection reason');
+        return;
+      }
+      handleAction(rejectModal.requestId, 'rejected', rejectReason);
+    }
+  };
+
+  const handleReasonSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if (value !== 'custom') {
+      setRejectReason(value);
+    } else {
+      setRejectReason('');
+    }
   };
 
   const downloadLeaveReportPdf = () => {
@@ -85,7 +115,13 @@ const HRLeaveManagement: React.FC = () => {
 
   const uniqueStatuses = Array.from(new Set(mockLeaveRequests.map(req => req.status)));
   const uniqueTypes = ['annual', 'sick', 'personal', 'maternity', 'emergency'];
-//   const employees = mockEmployees;
+  const rejectReasons = [
+    'Insufficient leave balance',
+    'Critical project deadline',
+    'Staffing constraints',
+    'Policy violation',
+    'Custom'
+  ];
 
   return (
     <div className="space-y-6">
@@ -130,7 +166,6 @@ const HRLeaveManagement: React.FC = () => {
         </Button>
       </div>
 
-
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Leave Requests</h2>
         <div className="overflow-x-auto">
@@ -162,7 +197,7 @@ const HRLeaveManagement: React.FC = () => {
                   <td className="px-4 py-3 text-sm text-gray-700">{req.appliedDate}</td>
                   <td className="px-4 py-3 text-sm text-gray-700">{req.comments || '—'}</td>
                   <td className="px-4 py-3 text-sm">
-                    {req.status === 'pending' && (
+                    {req.status === 'pending' ? (
                       <div className="flex space-x-2">
                         <Button
                           className="bg-[#72c02c] hover:bg-[#72c02c] text-white focus:ring-[#72c02c]"
@@ -174,11 +209,13 @@ const HRLeaveManagement: React.FC = () => {
                         <Button
                           className="bg-red-500 hover:bg-red-600 text-white focus:ring-red-600"
                           size="sm"
-                          onClick={() => handleAction(req.id, 'rejected', 'Rejected by HR')}
+                          onClick={() => openRejectModal(req.id)}
                         >
                           Reject
                         </Button>
                       </div>
+                    ) : (
+                      <span className="text-gray-500">—</span>
                     )}
                   </td>
                 </tr>
@@ -194,6 +231,53 @@ const HRLeaveManagement: React.FC = () => {
           </table>
         </div>
       </Card>
+
+      {rejectModal.isOpen && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <h3 className="text-lg font-semibold mb-4">Reject Leave Request</h3>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Select Preset Reason (Optional)</label>
+              <select
+                value={rejectReason}
+                onChange={handleReasonSelect}
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
+              >
+                <option value="">Select a preset reason or type below</option>
+                {rejectReasons.map(reason => (
+                  <option key={reason} value={reason}>{reason}</option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Rejection Reason</label>
+              <textarea
+                value={rejectReason}
+                onChange={(e) => setRejectReason(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
+                rows={4}
+                placeholder="Enter rejection reason or select from above"
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800"
+                size="sm"
+                onClick={() => setRejectModal({ isOpen: false, requestId: null })}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="bg-red-500 hover:bg-red-600 text-white focus:ring-red-600"
+                size="sm"
+                onClick={handleRejectSubmit}
+              >
+                Confirm Reject
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Employees Currently on Leave</h2>

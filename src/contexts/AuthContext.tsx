@@ -4,7 +4,7 @@ import { mockUsers } from '../data/mockData';
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string, role: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   loading: boolean;
 }
@@ -36,9 +36,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = async (email: string, password: string, role: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<boolean> => {
     // Mock login - in real app, this would call an API
-    const foundUser = mockUsers.find(u => u.email === email && u.role === role);
+    const foundUser = mockUsers.find(u => u.email === email);
     
     if (foundUser && password === 'password') { // Simple mock password
       setUser(foundUser);

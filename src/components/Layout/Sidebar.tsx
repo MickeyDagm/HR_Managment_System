@@ -8,11 +8,9 @@ import {
   Calendar, 
   Clock, 
   DollarSign, 
-  Settings, 
   LogOut,
   Briefcase,
   UserCheck,
-  Building,
   Megaphone,
   CalendarClock,
   Building2
@@ -26,7 +24,6 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { user, logout } = useAuth();
-  // const location = useLocation();
 
   const getNavigationItems = () => {
     const baseItems = [
@@ -50,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         { path: '/leave-management', icon: CalendarClock, label: 'Leave Requests' },
         { path: '/payroll-management', icon: DollarSign, label: 'Payroll' },
         { path: '/job-post', icon: Megaphone, label: 'Job Post' },
-        { path: '/recruitment', icon: Briefcase, label: 'Recruitment' }
+        { path: '/recruitment', icon: Briefcase, label: 'Candidates/Applicants' }
         
       ];
     } else if (user?.role === 'admin') {
@@ -60,6 +57,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         { path: '/company-records', icon: Building2, label: 'Company Records' },
         { path: '/job-postings', icon: Briefcase, label: 'Job Postings' }
       ];
+    } else if (user?.role === 'owner')  {
+      return [
+        ...baseItems,
+        {path: '/owner-emp-list', icon: Users, label: "Employees List"}
+      ]
     }
 
     return baseItems;
