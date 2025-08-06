@@ -1,9 +1,18 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User } from '../types';
-import { mockUsers } from '../data/mockData';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { Employee } from "../types/index";
+import { mockEmployees } from "../data/mockData";
+import { computeFinalPermissions } from "../types/levels";
+import { FeatureKey } from "../types/features";
 
 interface AuthContextType {
-  user: User | null;
+  user: Employee | null;
+  permissions: FeatureKey[];
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   loading: boolean;
@@ -11,11 +20,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
   return context;
 };
 
@@ -24,25 +31,35 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Employee | null>(null);
+  const [permissions, setPermissions] = useState<FeatureKey[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const savedUser = localStorage.getItem('hr_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    const saved = localStorage.getItem("hr_user");
+    if (saved) {
+      const parsed = JSON.parse(saved) as Employee;
+      setUser(parsed);
+      console.log(parsed)
+      const computed = computeFinalPermissions(
+        parsed.level,
+        parsed.customOverrides || []
+      );
+      setPermissions(computed);
     }
     setLoading(false);
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Mock login - in real app, this would call an API
-    const foundUser = mockUsers.find(u => u.email === email);
-    
-    if (foundUser && password === 'password') { // Simple mock password
+    const foundUser = mockEmployees.find((u) => u.email === email);
+    if (foundUser && password === "password") {
       setUser(foundUser);
-      localStorage.setItem('hr_user', JSON.stringify(foundUser));
+      const computed = computeFinalPermissions(
+        foundUser.level,
+        foundUser.customOverrides || []
+      );
+      setPermissions(computed);
+      localStorage.setItem("hr_user", JSON.stringify(foundUser));
       return true;
     }
     return false;
@@ -50,19 +67,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('hr_user');
+    setPermissions([]);
+    localStorage.removeItem("hr_user");
   };
 
   const value: AuthContextType = {
     user,
+    permissions,
     login,
     logout,
-    loading
+    loading,
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
   );
 };

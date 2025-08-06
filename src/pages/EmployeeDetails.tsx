@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../contexts/AuthContext';
-import { mockEmployees, mockLeaveRequests } from '../../data/mockData';
-import { Employee, LeaveRequest } from '../../types';
-import Card from '../../components/UI/Card';
-import userLogo from '../../assets/user_logo.jpg';
-import PageHeader from '../../components/UI/PageHeader';
+// import { useAuth } from '../contexts/AuthContext';
+import { mockEmployees, mockLeaveRequests } from '../data/mockData';
+import { Employee, LeaveRequest } from '../types';
+import Card from '../components/UI/Card';
+import userLogo from '../assets/user_logo.jpg';
+import PageHeader from '../components/UI/PageHeader';
 
 const HREmployeeDetails: React.FC = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { employeeId } = useParams<{ employeeId: string }>();
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([]);

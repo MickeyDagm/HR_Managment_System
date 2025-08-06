@@ -1,158 +1,153 @@
-import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats, Applicant, Company, Message } from '../types';
+import { User, Employee, AttendanceRecord, LeaveRequest, PayrollRecord, JobPosting, Notification, DashboardStats, Applicant, Company, Message, Department } from '../types';
 
-// Mock Users
-export const mockUsers: User[] = [
-  {
-    id: '1',
-    name: 'Abebe Kebede',
-    email: 'abebe.kebede@company.com',
-    role: 'employee',
-    avatar: '',
-    department: 'Engineering',
-    position: 'Software Developer',
-    employeeId: 'EMP001',
-    dateOfHire: '2022-01-15',
-    status: 'active',
-    salary: 75000,
-    phone: '+251-911-234-567',
-    address: 'Bole Sub City, Addis Ababa, Ethiopia',
-    companyId: "C001",
-    approved: 'approved'
-  },
-  {
-    id: '2',
-    name: 'Mulatu Tesfaye',
-    email: 'mulatu.tesfaye@company.com',
-    role: 'hr',
-    avatar: '',
-    department: 'Human Resources',
-    position: 'HR Manager',
-    employeeId: 'HR001',
-    dateOfHire: '2021-03-10',
-    status: 'active',
-    salary: 85000,
-    phone: '+251-911-345-678',
-    address: 'Gerji Kebele, Addis Ababa, Ethiopia',
-    companyId: "C001",
-    approved: 'approved'
-  },
-  {
-    id: '3',
-    name: 'Hanna Alemayehu',
-    email: 'hana.alemayehu@company.com',
-    role: 'admin',
-    avatar: '',
-    department: 'Administration',
-    position: 'System Administrator',
-    employeeId: 'ADM001',
-    dateOfHire: '2020-06-01',
-    status: 'active',
-    salary: 90000,
-    phone: '+251-911-456-789',
-    address: 'kirkos Sub City, Addis Ababa, Ethiopia',
-    approved: 'approved'
-  },
-   {
-    id: '10',
-    name: 'Yonas Andualem',
-    email: 'yonas.andualem@company.com',
-    role: 'owner',
-    avatar: '',
-    department: '',
-    position: 'Owner',
-    employeeId: 'EMP001',
-    dateOfHire: '2022-01-15',
-    status: 'active',
-    salary: 75000,
-    phone: '+251-911-234-567',
-    address: 'Bole Sub City, Addis Ababa, Ethiopia',
-    companyId: "C001",
-    approved: 'pending'
-  },
-];
+import { Features} from "../types/features";
 
-// Mock Employees
 export const mockEmployees: Employee[] = [
   {
-    id: '1',
-    name: 'Abebe Kebede',
-    email: 'abebe.kebede@company.com',
-    role: 'employee',
-    avatar: '',
-    department: 'Engineering',
-    position: 'Software Developer',
-    employeeId: 'EMP001',
-    dateOfHire: '2022-01-15',
-    status: 'active',
+    id: "1",
+    name: "Abebe Kebede",
+    email: "abebe.kebede@company.com",
+    role: "employee",
+    avatar: "",
+    department: "1",
+    position: "Software Developer",
+    employeeId: "EMP001",
+    dateOfHire: "2022-01-15",
+    status: "active",
     salary: 75000,
-    phone: '+251-911-234-567',
-    address: 'Bole Sub City, Addis Ababa, Ethiopia',
-    manager: 'Mulatu Tesfaye',
-    skills: ['React', 'Node.js', 'TypeScript', 'Python'],
+    phone: "+251-911-234-567",
+    address: "Bole Sub City, Addis Ababa, Ethiopia",
+    companyId: "C001",
+    approved: "approved",
+    manager: "Mulatu Tesfaye",
+    skills: ["React", "Node.js", "TypeScript", "Python"],
     performanceRating: 4.5,
-    companyId: "C001",
-    approved: 'approved'
+    level: "LEVEL_1",
+    customOverrides: [Features.CV_SEARCH],
   },
   {
-    id: '4',
-    name: 'Helen Tesfaye',
-    email: 'helen.tesfaye@company.com',
-    role: 'employee',
-    avatar: '',
-    department: 'Finance',
-    position: 'Senior Accountant',
-    employeeId: 'EMP002',
-    dateOfHire: '2022-01-15',
-    status: 'active',
+    id: "4",
+    name: "Helen Tesfaye",
+    email: "helen.tesfaye@company.com",
+    role: "employee",
+    avatar: "",
+    department: "2",
+    position: "Senior Accountant",
+    employeeId: "EMP002",
+    dateOfHire: "2022-01-15",
+    status: "active",
     salary: 75000,
-    phone: '+251-911-234-567',
-    address: 'Kality Sub City, Addis Ababa, Ethiopia',
-    manager: 'Mulatu Tesfaye',
-    skills: ['Digital Marketing', 'SEO', 'Content Creation', 'Analytics'],
+    phone: "+251-911-234-567",
+    address: "Kality Sub City, Addis Ababa, Ethiopia",
+    companyId: "C001",
+    approved: "approved",
+    manager: "Mulatu Tesfaye",
+    skills: ["Digital Marketing", "SEO", "Content Creation", "Analytics"],
     performanceRating: 4.2,
+    level: "LEVEL_1",
+    customOverrides: [],
+  },
+  {
+    id: "5",
+    name: "Feven Haile",
+    email: "feven.haile@company.com",
+    role: "employee",
+    avatar: "",
+    department: "3",
+    position: "Sales Executive",
+    employeeId: "EMP003",
+    dateOfHire: "2022-01-15",
+    status: "active",
+    salary: 75000,
+    phone: "+251-911-234-567",
+    address: "Yeka Sub City, Addis Ababa, Ethiopia",
+    companyId: "C002",
+    approved: "approved",
+    manager: "Mulatu Tesfaye",
+    skills: ["Customer Relations", "Negotiation", "CRM Software", "Lead Generation"],
+    performanceRating: 4.0,
+    level: "LEVEL_1",
+    customOverrides: [],
+  },
+  {
+    id: "6",
+    name: "Melaku Alemu",
+    email: "melaku.alemu@company.com",
+    role: "employee",
+    avatar: "",
+    department: "4",
+    position: "Customer Support Specialist",
+    employeeId: "EMP004",
+    dateOfHire: "2022-01-15",
+    status: "active",
+    salary: 75000,
+    phone: "+251-911-234-567",
+    address: "Arada Sub City, Addis Ababa, Ethiopia",
+    companyId: "C002",
+    approved: "approved",
+    manager: "Mulatu Tesfaye",
+    skills: ["Customer Relations", "Negotiation", "CRM Software", "Lead Generation"],
+    performanceRating: 4.0,
+    level: "LEVEL_1",
+    customOverrides: [],
+  },
+  {
+    id: "2",
+    name: "Mulatu Tesfaye",
+    email: "mulatu.tesfaye@company.com",
+    role: "hr",
+    avatar: "",
+    department: "HR",
+    position: "HR Manager",
+    employeeId: "HR001",
+    dateOfHire: "2021-03-10",
+    status: "active",
+    salary: 85000,
+    phone: "+251-911-345-678",
+    address: "Gerji Kebele, Addis Ababa, Ethiopia",
     companyId: "C001",
-    approved: 'approved'
+    approved: "approved",
+    level: "LEVEL_2",
+    customOverrides: [Features.PAYROLL_MANAGEMENT],
   },
   {
-    id: '5',
-    name: 'Feven Haile',
-    email: 'feven.haile@company.com',
-    role: 'employee',
-    avatar: '',
-    department: 'Sales',
-    position: 'Sales Executive',
-    employeeId: 'EMP003',
-    dateOfHire: '2022-01-15',
-    status: 'active',
-    salary: 75000,
-    phone: '+251-911-234-567',
-    address: 'Yeka Sub City, Addis Ababa, Ethiopia',
-    manager: 'Mulatu Tesfaye',
-    skills: ['Customer Relations', 'Negotiation', 'CRM Software', 'Lead Generation'],
-    performanceRating: 4.0,
-    companyId: "C002",
-    approved: 'approved'
+    id: "3",
+    name: "Hanna Alemayehu",
+    email: "hana.alemayehu@company.com",
+    role: "admin",
+    avatar: "",
+    department: "Administration",
+    position: "System Administrator",
+    employeeId: "ADM001",
+    dateOfHire: "2020-06-01",
+    status: "active",
+    salary: 90000,
+    phone: "+251-911-456-789",
+    address: "Kirkos Sub City, Addis Ababa, Ethiopia",
+    companyId: "C001",
+    approved: "approved",
+    level: "LEVEL_3",
+    customOverrides: [],
   },
   {
-    id: '5',
-    name: 'Melaku Alemu',
-    email: 'melaku.alemu@company.com',
-    role: 'employee',
-    avatar: '',
-    department: 'Customer Support',
-    position: 'Customer Support Specialist',
-    employeeId: 'EMP004',
-    dateOfHire: '2022-01-15',
-    status: 'active',
+    id: "10",
+    name: "Yonas Andualem",
+    email: "yonas.andualem@company.com",
+    role: "admin",
+    avatar: "",
+    department: "Executive",
+    position: "Owner",
+    employeeId: "OWNER001",
+    dateOfHire: "2022-01-15",
+    status: "active",
     salary: 75000,
-    phone: '+251-911-234-567',
-    address: 'Arada Sub City, Addis Ababa, Ethiopia',
-    manager: 'Mulatu Tesfaye',
-    skills: ['Customer Relations', 'Negotiation', 'CRM Software', 'Lead Generation'],
-    performanceRating: 4.0,
-    companyId: "C002",
-    approved: 'approved'
-  }
+    phone: "+251-911-234-567",
+    address: "Bole Sub City, Addis Ababa, Ethiopia",
+    companyId: "C001",
+    approved: "pending",
+    level: "LEVEL_3",
+    customOverrides: [],
+  },
 ];
 
 // Mock Attendance Records
@@ -213,7 +208,19 @@ export const mockLeaveRequests: LeaveRequest[] = [
     approvedBy: 'Sarah Johnson',
     comments: 'Approved. Get well soon!',
     appliedDate: '2024-01-19'
-  }
+  },
+  {
+    id: '3',
+    employeeId: '2',
+    employeeName: 'Mulatu Tesfaye',
+    type: 'annual',
+    startDate: '2024-02-01',
+    endDate: '2024-02-03',
+    days: 3,
+    reason: 'Family vacation',
+    status: 'pending',
+    appliedDate: '2024-01-15'
+  },
 ];
 
 // Mock Payroll Records
@@ -458,6 +465,28 @@ export const mockMessages: Message[] = [
   }
 ];
 
+export const mockDepartment: Department[] = [
+  {
+    id: '1',
+    name: 'Engineering',
+    description: 'Enginerring dept'
+  },
+  {
+    id: '2',
+    name: 'Finance',
+    description: 'Finance dept'
+  },
+  {
+    id: '3',
+    name: 'Sales',
+    description: 'Sales dept'
+  },
+  {
+    id: '4',
+    name: 'Customer Support',
+    description: 'Customer Support dept'
+  }
+]
 
 // Mock Dashboard Stats
 export const mockDashboardStats: Record<string, DashboardStats> = {
@@ -489,7 +518,7 @@ export const mockDashboardStats: Record<string, DashboardStats> = {
 
 // Helper functions for mock data
 export const getCurrentUser = (role: string): User => {
-  return mockUsers.find(user => user.role === role) || mockUsers[0];
+  return mockEmployees.find(user => user.role === role) || mockEmployees[0];
 };
 
 export const getEmployeeById = (id: string): Employee | undefined => {
@@ -513,7 +542,7 @@ export const getNotificationsByUser = (userId: string): Notification[] => {
 };
 
 export const getPendingUsers = (): User[] => {
-  return mockUsers.filter(user => user.approved === 'pending');
+  return mockEmployees.filter(user => user.approved === 'pending');
 };
 
 export const getPendingJobPosts = (): JobPosting[] => {
@@ -526,9 +555,9 @@ export const approveJobPost = (id: string): void => {
 };
 
 export const approveEmployee = (id: string): void => {
-  const userIndex = mockUsers.findIndex(user => user.id === id);
+  const userIndex = mockEmployees.findIndex(user => user.id === id);
   if (userIndex !== -1) {
-    mockUsers[userIndex] = { ...mockUsers[userIndex], approved: 'approved', status: 'active' };
+    mockEmployees[userIndex] = { ...mockEmployees[userIndex], approved: 'approved', status: 'active' };
     return;
   }
   const applicantIndex = mockApplicants.findIndex(applicant => applicant.id === id);
@@ -538,9 +567,9 @@ export const approveEmployee = (id: string): void => {
 };
 
 export const rejectEmployee = (id: string): void => {
-  const userIndex = mockUsers.findIndex(user => user.id === id);
+  const userIndex = mockEmployees.findIndex(user => user.id === id);
   if (userIndex !== -1) {
-    mockUsers[userIndex] = { ...mockUsers[userIndex], approved: 'rejected', status: 'terminated' };
+    mockEmployees[userIndex] = { ...mockEmployees[userIndex], approved: 'rejected', status: 'terminated' };
     return;
   }
   const applicantIndex = mockApplicants.findIndex(applicant => applicant.id === id);

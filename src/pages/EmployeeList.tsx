@@ -1,64 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import Table from '../../components/UI/Table';
-import { mockEmployees, mockLeaveRequests } from '../../data/mockData';
-import { Employee } from '../../types/index';
-import Button from '../../components/UI/Button';
+import Table from '../components/UI/Table';
+import { mockEmployees, mockLeaveRequests } from '../data/mockData';
+import { Employee } from '../types/index';
+import Button from '../components/UI/Button';
 import { NavLink } from 'react-router-dom';
-import PageHeader from '../../components/UI/PageHeader';
+import PageHeader from '../components/UI/PageHeader';
 
-const OwnerEmployeeList: React.FC = () => {
+const EmployeeList: React.FC = () => {
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
-  const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
   const [filters, setFilters] = useState({
     department: '',
     status: '',
-    role: '',
+    position: '',
     search: ''
   });
 
-  // Predefined roles for promotion
-  const roleOptions = ['Employee', 'Team Lead', 'Manager', 'Director'];
+  useEffect(() => {
+    setFilteredEmployees(mockEmployees);
+  }, []);
 
   useEffect(() => {
-    setFilteredEmployees(employees);
-  }, [employees]);
-
-  useEffect(() => {
-    let result = [...employees];
+    let result = [...mockEmployees];
 
     if (filters.department) {
       result = result.filter(emp => emp.department === filters.department);
     }
     if (filters.status) {
       if (filters.status === 'on_leave') {
-        const today = new Date().toISOString().split('T')[0];
+        const today = new Date('2025-07-14');
         result = result.filter(emp =>
           mockLeaveRequests.some(
             req =>
               req.employeeId === emp.id &&
               req.status === 'approved' &&
-              new Date(req.startDate) <= new Date(today) &&
-              new Date(req.endDate) >= new Date(today)
+              new Date(req.startDate) <= today &&
+              new Date(req.endDate) >= today
           )
         );
       } else if (filters.status === 'not_on_leave') {
-        const today = new Date().toISOString().split('T')[0];
+        const today = new Date('2025-07-14');
         result = result.filter(emp =>
           !mockLeaveRequests.some(
             req =>
               req.employeeId === emp.id &&
               req.status === 'approved' &&
-              new Date(req.startDate) <= new Date(today) &&
-              new Date(req.endDate) >= new Date(today)
+              new Date(req.startDate) <= today &&
+              new Date(req.endDate) >= today
           )
         );
       } else {
         result = result.filter(emp => emp.status === filters.status);
       }
     }
-    if (filters.role) {
-      result = result.filter(emp => emp.position === filters.role);
+    if (filters.position) {
+      result = result.filter(emp => emp.position === filters.position);
     }
     if (filters.search) {
       result = result.filter(emp =>
@@ -68,43 +63,34 @@ const OwnerEmployeeList: React.FC = () => {
     }
 
     setFilteredEmployees(result);
-  }, [filters, employees]);
+  }, [filters]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleRoleChange = (employeeId: string, newRole: string) => {
-    setEmployees(prev =>
-      prev.map(emp =>
-        emp.id === employeeId ? { ...emp, position: newRole } : emp
-      )
-    );
-    toast.success(`Employee role updated to ${newRole}`);
-  };
-
   const isEmployeeOnLeave = (employeeId: string): boolean => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date('2025-07-14');
     return mockLeaveRequests.some(
       req =>
         req.employeeId === employeeId &&
         req.status === 'approved' &&
-        new Date(req.startDate) <= new Date(today) &&
-        new Date(req.endDate) >= new Date(today)
+        new Date(req.startDate) <= today &&
+        new Date(req.endDate) >= today
     );
   };
 
-  const departments = Array.from(new Set(employees.map(emp => emp.department)));
-  const statuses = Array.from(new Set(employees.map(emp => emp.status)));
+  const departments = Array.from(new Set(mockEmployees.map(emp => emp.department)));
+  const statuses = Array.from(new Set(mockEmployees.map(emp => emp.status)));
   const statusOptions = [...statuses, 'on_leave', 'not_on_leave'];
-  const roles = Array.from(new Set(employees.map(emp => emp.position)));
+  const positions = Array.from(new Set(mockEmployees.map(emp => emp.position)));
 
   const headers = [
     'Name',
     'Employee ID',
     'Department',
-    'Role',
+    'Position',
     'Email',
     'Phone',
     'Status',
@@ -160,16 +146,16 @@ const OwnerEmployeeList: React.FC = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Position</label>
             <select
-              name="role"
-              value={filters.role}
+              name="position"
+              value={filters.position}
               onChange={handleFilterChange}
               className="w-full p-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
             >
-              <option value="">All Roles</option>
-              {roles.map(role => (
-                <option key={role} value={role}>{role}</option>
+              <option value="">All Positions</option>
+              {positions.map(pos => (
+                <option key={pos} value={pos}>{pos}</option>
               ))}
             </select>
           </div>
@@ -182,17 +168,7 @@ const OwnerEmployeeList: React.FC = () => {
             <td className="px-6 py-4 text-sm text-gray-900">{emp.name}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.employeeId}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.department}</td>
-            <td className="px-6 py-4 text-sm text-gray-600">
-              <select
-                value={emp.position}
-                onChange={(e) => handleRoleChange(emp.id, e.target.value)}
-                className="p-1 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                {roleOptions.map(role => (
-                  <option key={role} value={role}>{role}</option>
-                ))}
-              </select>
-            </td>
+            <td className="px-6 py-4 text-sm text-gray-600">{emp.position}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.email}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.phone}</td>
             <td className="px-6 py-4 text-sm capitalize text-gray-600">
@@ -218,4 +194,4 @@ const OwnerEmployeeList: React.FC = () => {
   );
 };
 
-export default OwnerEmployeeList;
+export default EmployeeList;

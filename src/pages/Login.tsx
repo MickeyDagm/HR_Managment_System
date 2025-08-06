@@ -111,11 +111,13 @@ const Login: React.FC = () => {
         </form>
 
         {/* Footer */}
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center space-y-4">
           <p className="text-sm text-gray-600">
             Need help? Contact your system administrator
           </p>
+          <p className='text-sm'><em>Powered By</em> <span className='text-[#72c02c] font-bold'>GEEZJOBS</span></p>
         </div>
+        
       </div>
     </div>
   );

@@ -1,42 +1,50 @@
+import { FeatureKey } from "./features";
+export type EmployeeRole = "employee" | "hr" | "admin";
+export type PermissionLevel = "LEVEL_1" | "LEVEL_2" | "LEVEL_3";
+export type UserRole = "employee" | "hr" | "admin" | "owner";
+export type UserStatus =
+  | "active"
+  | "inactive"
+  | "terminated"
+  | "pending"
+  | "reviewed"
+  | "interview_scheduled"
+  | "rejected"
+  | "hired";
 export interface User {
   id: string;
   name: string;
   email: string;
-  role?: 'employee' | 'hr' | 'admin' | 'owner';
-  skills?: string[];
-  avatar?: string;
-  department?: string;
-  position?: string;
-  employeeId?: string;
-  dateOfHire?: string;
-  status?: 'active' | 'inactive' | 'terminated'|'pending' | 'reviewed' | 'interview_scheduled' | 'rejected' | 'hired';
-  salary?: number;
+  role?: UserRole;
   phone?: string;
   address?: string;
-  companyId?: string; 
-  resume?: string; 
-  coverLetter?: string;
-  appliedDate?: string;
-  jobId?: string; 
-  jobTitle?: string; 
-  experience?: string; 
+  avatar?: string;
+  status?: UserStatus;
+  approved: "approved" | "pending" | "rejected";
+  companyId?: string;
+
+  // Shared skill info
+  skills?: string[];
   education?: string;
-  interviewDate?: string; 
-  interviewTime?: string; 
-  approved: 'approved' | 'pending' | 'rejected';
+  experience?: string;
 }
 
+
 export interface Employee extends User {
+  role: "employee" | "hr" | "admin";
+  employeeId: string;
   department: string;
   position: string;
-  employeeId: string;
   dateOfHire: string;
-  status: 'active' | 'inactive' | 'terminated';
   salary: number;
   manager?: string;
   performanceRating?: number;
-}
 
+  // Permission-related
+   level: PermissionLevel;             // Standard access level
+  customOverrides?: FeatureKey[];     // Extra manual permissions (optional)
+  // permissions?: FeatureKey[];          // Final computed flat permissions
+}
 
 export interface Applicant  extends User {
   jobId: string; 
@@ -44,7 +52,7 @@ export interface Applicant  extends User {
   resume: string; 
   coverLetter: string;
   appliedDate: string;
-  status: 'pending' | 'reviewed' | 'interview_scheduled' | 'rejected' | 'hired';
+  status: UserStatus;
   experience: string; 
   education: string;
   interviewDate?: string; 
@@ -124,6 +132,12 @@ export interface Notification {
   type: 'info' | 'warning' | 'error' | 'success';
   read: boolean;
   createdAt: string;
+}
+
+export interface Department {
+  id: string;
+  name: string;
+  description: string;
 }
 
 export interface DashboardStats {

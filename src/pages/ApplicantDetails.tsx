@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../contexts/AuthContext';
-import { mockApplicants } from '../../data/mockData';
-import { Applicant } from '../../types';
-import Card from '../../components/UI/Card';
-import Button from '../../components/UI/Button';
-import PageHeader from '../../components/UI/PageHeader';
+import { useAuth } from '../contexts/AuthContext';
+import { mockApplicants } from '../data/mockData';
+import { Applicant } from '../types';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import PageHeader from '../components/UI/PageHeader';
 
 const HRApplicantDetails: React.FC = () => {
   const { user } = useAuth();

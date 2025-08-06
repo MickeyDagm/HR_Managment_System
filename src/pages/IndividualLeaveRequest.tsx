@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import Card from '../../components/UI/Card';
-import Button from '../../components/UI/Button';
-import { useAuth } from '../../contexts/AuthContext';
-import { mockLeaveRequests } from '../../data/mockData';
-import { LeaveRequest } from '../../types';
-import PageHeader from '../../components/UI/PageHeader';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import { useAuth } from '../contexts/AuthContext';
+import { mockLeaveRequests } from '../data/mockData';
+import { LeaveRequest } from '../types';
+import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const EmployeeLeavePage: React.FC = () => {
   const { user } = useAuth();
   const [leaves, setLeaves] = useState<LeaveRequest[]>(
     mockLeaveRequests.filter(l => l.employeeId === user?.id)
   );
+  const [isHalfDay, setIsHalfDay] =  useState(false)
 
   const [formData, setFormData] = useState<{
     type: 'annual' | 'sick' | 'personal' | 'maternity' | 'emergency',
@@ -28,6 +30,12 @@ const EmployeeLeavePage: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if(value == 'half-day'){
+      setIsHalfDay(true)
+    }
+    if(value != 'half-day'){
+      setIsHalfDay(false)
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,6 +69,10 @@ const EmployeeLeavePage: React.FC = () => {
   };
 
   return (
+    <>
+      <Helmet>
+        <title>Leave Request | HR Management System</title>
+      </Helmet>
     <div className="space-y-6">
       {/* Header */}
       <PageHeader title='Leave Management'/>'
@@ -69,44 +81,67 @@ const EmployeeLeavePage: React.FC = () => {
       <Card>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Apply for Leave</h3>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className='col-span-2'>
             <label className="block text-sm font-medium text-gray-700">Leave Type</label>
             <select
               name="type"
               value={formData.type}
               onChange={handleChange}
-              className="w-full mt-1 border-gray-300 rounded-md shadow-sm"
+              className="w-80 mt-1 border-[#72c02c] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#72c02c] focus:border-transparent]"
             >
-              <option value="annual">Annual</option>
+              <option value="annual" className='hover:bg-[#72c02c'>Annual</option>
               <option value="sick">Sick</option>
               <option value="maternity">Maternity</option>
               <option value="unpaid">Unpaid</option>
+              <option value="half-day">Half day leave</option>
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Start Date</label>
-            <input
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-              className="w-full mt-1 border-gray-300 rounded-md shadow-sm"
-              required
-            />
+          {isHalfDay && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Date</label>
+              <input
+                type="date"
+                name="Date"
+                min={new Date().toISOString().split('T')[0]}
+                value={formData.startDate}
+                onChange={handleChange}
+                className="w-80 mt-1 border-gray-300 rounded-md shadow-sm"
+                required
+              />
           </div>
+          )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">End Date</label>
-            <input
-              type="date"
-              name="endDate"
-              value={formData.endDate}
-              onChange={handleChange}
-              className="w-full mt-1 border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
+          {!isHalfDay && (
+            <>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Start Date</label>
+              <input
+                type="date"
+                name="startDate"
+                min={new Date().toISOString().split('T')[0]}
+                value={formData.startDate}
+                onChange={handleChange}
+                className="w-80 mt-1 border-gray-300 rounded-md shadow-sm"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">End Date</label>
+              <input
+                type="date"
+                name="endDate"
+                min={new Date().toISOString().split('T')[0]}
+                value={formData.endDate}
+                onChange={handleChange}
+                className="w-80 mt-1 border-gray-300 rounded-md shadow-sm"
+                required
+              />
+            </div>
+          </>
+          )}
+
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700">Reason</label>
@@ -115,7 +150,7 @@ const EmployeeLeavePage: React.FC = () => {
               value={formData.reason}
               onChange={handleChange}
               rows={3}
-              className="w-full mt-1 border-gray-300 rounded-md shadow-sm"
+              className="w-full mt-1 border-gray-300 rounded-md shadow-sm p-4 focus:outline-none focus:ring-2 focus:ring-[#72c02c] focus:border-transparent "
               placeholder="Write a short reason..."
               required
             />
@@ -167,6 +202,7 @@ const EmployeeLeavePage: React.FC = () => {
         )}
       </Card>
     </div>
+    </>
   );
 };
 

@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Clock, Calendar, TrendingUp, CheckCircle, XCircle, TrendingDown } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
-import { mockAttendanceRecords } from '../../data/mockData';
-import Card from '../../components/UI/Card';
-import Button from '../../components/UI/Button';
-import StatCard from '../../components/UI/StatCard';
+import { useAuth } from '../contexts/AuthContext';
+import { mockAttendanceRecords } from '../data/mockData';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import StatCard from '../components/UI/StatCard';
+import { Helmet } from "react-helmet-async";
 
 const Attendance: React.FC = () => {
   const { user } = useAuth();
-  // const employeeId = user?.id;
-  // const attendanceRecords = mockAttendanceRecords.filter(r => r.employeeId === employeeId);
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const [checkInTime, setCheckInTime] = useState<string>('');
   
@@ -31,6 +30,10 @@ const Attendance: React.FC = () => {
   const attendanceRate = Math.round((employeeAttendance.length / workingDays) * 100);
 
   return (
+    <>
+    <Helmet>
+        <title>Attendance | HR Management System</title>
+      </Helmet>
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -39,7 +42,6 @@ const Attendance: React.FC = () => {
           Today: {new Date().toLocaleDateString()}
         </div>
       </div>
-
       {/* Check In/Out Section */}
       <Card>
         <div className="text-center py-8">
@@ -54,7 +56,6 @@ const Attendance: React.FC = () => {
               <p className="text-gray-600">Check-in time: {checkInTime}</p>
             )}
           </div>
-          
           <div className="flex justify-center space-x-4">
             {!isCheckedIn ? (
               <Button onClick={handleCheckIn} size="lg">
@@ -70,7 +71,6 @@ const Attendance: React.FC = () => {
           </div>
         </div>
       </Card>
-
       {/* Monthly Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
@@ -92,7 +92,6 @@ const Attendance: React.FC = () => {
           color="blue"
         />
       </div>
-
       {/* Attendance History */}
       <Card>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Attendance History</h3>
@@ -148,7 +147,7 @@ const Attendance: React.FC = () => {
         </div>
       </Card>
     </div>
+    </>
   );
 };
-
 export default Attendance;

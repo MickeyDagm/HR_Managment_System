@@ -1,8 +1,7 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { X, Send, MessageCircleMore, ArrowLeft } from "lucide-react"; 
 import { useAuth } from "../contexts/AuthContext";
-import { mockMessages, mockUsers, getMessagesByUser } from "../data/mockData";
+import { mockMessages, mockEmployees, mockDepartment } from "../data/mockData";
 import { Message, User } from "../types";
 
 const Messaging: React.FC = () => {
@@ -11,16 +10,16 @@ const Messaging: React.FC = () => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>(mockMessages);
-  const [chatUsers, setChatUsers] = useState<User[]>([]);
+  const [selectedDept, setSelectedDept] = useState(mockDepartment[0]?.name || '');
 
-  useEffect(() => {
-    if (user) {
-      const userMessages = getMessagesByUser(user.id);
-      const userIds = Array.from(new Set(userMessages.flatMap(msg => [msg.senderId, msg.receiverId])));
-      const users = mockUsers.filter(u => userIds.includes(u.id) && u.id !== user.id);
-      setChatUsers(users);
-    }
-  }, [user, messages]);
+  const handleDeptSelect = useCallback((deptName: string) => {
+    setSelectedDept(deptName);
+  }, []);
+
+  const getChatUsers = () => {
+    const selectedDeptId = mockDepartment.find(dept => dept.name === selectedDept)?.id || '';
+    return mockEmployees.filter(u => u.department === selectedDeptId && u.id !== user?.id); 
+  };
 
   const handleSendMessage = () => {
     if (!newMessage.trim() || !selectedUserId) return;
@@ -39,12 +38,15 @@ const Messaging: React.FC = () => {
   };
 
   const getUserById = (id: string): User | undefined => {
-    return mockUsers.find(u => u.id === id);
+    return mockEmployees.find(u => u.id === id);
   };
 
   const getLastMessage = (otherUserId: string) => {
     const userMessages = messages
-      .filter(msg => (msg.senderId === user?.id && msg.receiverId === otherUserId) || (msg.senderId === otherUserId && msg.receiverId === user?.id))
+      .filter(msg => 
+        (msg.senderId === user?.id && msg.receiverId === otherUserId) || 
+        (msg.senderId === otherUserId && msg.receiverId === user?.id)
+      )
       .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
     return userMessages[0]?.content || "";
   };
@@ -55,6 +57,17 @@ const Messaging: React.FC = () => {
 
   return (
     <>
+      <style>
+        {`
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+          .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}
+      </style>
       {/* Floating Chat Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <button
@@ -88,42 +101,62 @@ const Messaging: React.FC = () => {
           <div className="flex flex-1 overflow-hidden">
             {/* Chat List (Left Side, Hidden when a user is selected) */}
             {!selectedUserId && (
-              <div className="w-full bg-gray-50 overflow-y-auto">
-                {chatUsers.map((chatUser) => {
-                  const lastMessage = getLastMessage(chatUser.id);
-                  const lastMessageTimestamp = lastMessage
-                    ? messages.find(msg => msg.content === lastMessage)?.timestamp
-                    : null;
-
-                  return (
-                    <div
-                      key={chatUser.id}
-                      className="flex items-center p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition duration-150"
-                      onClick={() => setSelectedUserId(chatUser.id)}
+              <div className="w-full bg-gray-50 overflow-y-auto hide-scrollbar">
+                {/* Department Tabs */}
+                <div className="flex justify-between shadow-md sticky top-0 z-10 bg-gray-50">
+                  {mockDepartment.map((dept) => (
+                    <li 
+                      key={dept.id}
+                      className={`list-none relative px-auto py-3 cursor-pointer w-full flex align-center justify-center ${selectedDept === dept.name ? 'text-[#72c02c] bg-[#def8ca]' : 'text-gray-600 hover:text-[#72c02c]'}`}
+                      onClick={() => handleDeptSelect(dept.name)}
                     >
-                      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold overflow-hidden">
-                        {chatUser.avatar ? (
-                          <img src={chatUser.avatar} alt={chatUser.name} className="w-full h-full rounded-full object-cover" />
-                        ) : (
-                          chatUser.name[0]
-                        )}
-                      </div>
-                      <div className="ml-4 flex-1">
-                        <div className="flex justify-between">
-                          <div className="font-medium text-gray-800">{chatUser.name}</div>
-                          <div className="text-xs text-gray-500">
-                            {lastMessageTimestamp
-                              ? new Date(lastMessageTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                              : ''}
+                      {dept.name}
+                      {selectedDept === dept.name && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#72c02c]"></div>
+                      )}
+                    </li>
+                  ))}
+                </div>
+
+                {/* User List */}
+                {getChatUsers().length > 0 ? (
+                  getChatUsers().map((chatUser) => {
+                    const lastMessage = getLastMessage(chatUser.id);
+                    const lastMessageTimestamp = lastMessage
+                      ? messages.find(msg => msg.content === lastMessage)?.timestamp
+                      : null;
+
+                    return (
+                      <div
+                        key={chatUser.id}
+                        className="flex items-center p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition duration-150"
+                        onClick={() => setSelectedUserId(chatUser.id)}
+                      >
+                        <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold overflow-hidden">
+                          {chatUser.avatar ? (
+                            <img src={chatUser.avatar} alt={chatUser.name} className="w-full h-full rounded-full object-cover" />
+                          ) : (
+                            chatUser.name[0]
+                          )}
+                        </div>
+                        <div className="ml-4 flex-1">
+                          <div className="flex justify-between">
+                            <div className="font-medium text-gray-800">{chatUser.name}</div>
+                            <div className="text-xs text-gray-500">
+                              {lastMessageTimestamp
+                                ? new Date(lastMessageTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                : ''}
+                            </div>
+                          </div>
+                          <div className="text-sm text-gray-500 truncate">
+                            {lastMessage || "Start conversation"}
                           </div>
                         </div>
-                        <div className="text-sm text-gray-500 truncate">{lastMessage}</div>
                       </div>
-                    </div>
-                  );
-                })}
-                {chatUsers.length === 0 && (
-                  <div className="p-4 text-gray-600 text-sm">No conversations yet.</div>
+                    );
+                  })
+                ) : (
+                  <div className="p-4 text-gray-600 text-sm">No employees in this department.</div>
                 )}
               </div>
             )}
@@ -147,7 +180,7 @@ const Messaging: React.FC = () => {
                 </div>
 
                 {/* Messages */}
-                <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
+                <div className="flex-1 p-4 overflow-y-auto bg-gray-100 hide-scrollbar">
                   {messages
                     .filter(msg => 
                       (msg.senderId === user?.id && msg.receiverId === selectedUserId) || 

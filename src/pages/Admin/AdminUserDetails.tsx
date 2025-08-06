@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Button from '../../components/UI/Button';
-import { mockUsers, mockApplicants, mockCompanies, approveEmployee, rejectEmployee } from '../../data/mockData';
+import { mockEmployees, mockApplicants, mockCompanies, approveEmployee, rejectEmployee } from '../../data/mockData';
 import { User, Applicant } from '../../types';
 import PageHeader from '../../components/UI/PageHeader';
 
@@ -15,7 +15,7 @@ const AdminUserDetail: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    const user = mockUsers.find(user => user.id === id);
+    const user = mockEmployees.find(user => user.id === id);
     const applicant = mockApplicants.find(applicant => applicant.id === id);
     setEntity(user || applicant || null);
     setLoading(false);

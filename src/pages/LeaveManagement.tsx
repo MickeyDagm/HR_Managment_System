@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../contexts/AuthContext';
-import { mockLeaveRequests } from '../../data/mockData';
-import { LeaveRequest } from '../../types';
-import Card from '../../components/UI/Card';
-import Button from '../../components/UI/Button';
-import PageHeader from '../../components/UI/PageHeader';
+import { useAuth } from '../contexts/AuthContext';
+import { mockLeaveRequests } from '../data/mockData';
+import { LeaveRequest } from '../types';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import PageHeader from '../components/UI/PageHeader';
 
 const HRLeaveManagement: React.FC = () => {
   const { user } = useAuth();
@@ -197,12 +197,13 @@ const HRLeaveManagement: React.FC = () => {
                   <td className="px-4 py-3 text-sm text-gray-700">{req.appliedDate}</td>
                   <td className="px-4 py-3 text-sm text-gray-700">{req.comments || '—'}</td>
                   <td className="px-4 py-3 text-sm">
-                    {req.status === 'pending' ? (
+                    {req.status === 'pending' && user?.role === 'hr' ? (
                       <div className="flex space-x-2">
                         <Button
                           className="bg-[#72c02c] hover:bg-[#72c02c] text-white focus:ring-[#72c02c]"
                           size="sm"
                           onClick={() => handleAction(req.id, 'approved', 'Approved by HR')}
+                          disabled={user?.id === req.employeeId} 
                         >
                           Approve
                         </Button>
@@ -210,6 +211,7 @@ const HRLeaveManagement: React.FC = () => {
                           className="bg-red-500 hover:bg-red-600 text-white focus:ring-red-600"
                           size="sm"
                           onClick={() => openRejectModal(req.id)}
+                          disabled={user?.id === req.employeeId}
                         >
                           Reject
                         </Button>

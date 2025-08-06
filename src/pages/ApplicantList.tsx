@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { mockApplicants, mockJobPostings } from '../../data/mockData';
-import { Applicant } from '../../types';
-import Table from '../../components/UI/Table';
-import Button from '../../components/UI/Button';
-import PageHeader from '../../components/UI/PageHeader';
+import { mockApplicants, mockJobPostings } from '../data/mockData';
+import { Applicant } from '../types';
+import Table from '../components/UI/Table';
+import Button from '../components/UI/Button';
+import PageHeader from '../components/UI/PageHeader';
 
 const HRRecruitment: React.FC = () => {
   const [filteredApplicants, setFilteredApplicants] = useState<Applicant[]>([]);

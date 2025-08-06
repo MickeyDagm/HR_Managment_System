@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Table from '../../components/UI/Table';
 import Button from '../../components/UI/Button';
 import { NavLink } from 'react-router-dom';
-import { mockUsers, mockApplicants, mockCompanies } from '../../data/mockData';
+import { mockEmployees, mockApplicants, mockCompanies } from '../../data/mockData';
 import { User, Applicant } from '../../types';
 import PageHeader from '../../components/UI/PageHeader';
 
@@ -19,15 +19,15 @@ const AdminUserList: React.FC = () => {
   });
 
   useEffect(() => {
-    setFilteredUsers(mockUsers);
+    setFilteredUsers(mockEmployees);
     setFilteredApplicants(mockApplicants);
-    setFilteredEmployees(mockUsers.filter(user => user.role === 'employee'));
+    setFilteredEmployees(mockEmployees.filter(user => user.role === 'employee'));
   }, []);
 
   useEffect(() => {
-    let usersResult = [...mockUsers];
+    let usersResult = [...mockEmployees];
     let applicantsResult = [...mockApplicants];
-    let employeesResult = [...mockUsers].filter(user => user.role === 'employee');
+    let employeesResult = [...mockEmployees].filter(user => user.role === 'employee');
 
     if (filters.role) {
       usersResult = usersResult.filter(user => user.role === filters.role);
@@ -67,7 +67,7 @@ const AdminUserList: React.FC = () => {
     setFilters(prev => ({ ...prev, [name]: value }));
   };
 
-  const roles = Array.from(new Set(mockUsers.map(user => user.role)));
+  const roles = Array.from(new Set(mockEmployees.map(user => user.role)));
   const approvalStatuses = ['pending', 'approved', 'rejected'];
   const companies = Array.from(new Set(mockCompanies.map(company => company.id)));
 
@@ -207,7 +207,7 @@ const AdminUserList: React.FC = () => {
               <td className="px-6 py-4 text-sm text-gray-600">{employee.email}</td>
               <td className="px-6 py-4 text-sm text-gray-600">{employee.phone || '—'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">{employee.role}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">{employee.employeeId || '—'}</td>
+              <td className="px-6 py-4 text-sm text-gray-600">{employee.id || '—'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">
                 {mockCompanies.find(c => c.id === employee.companyId)?.name || '—'}
               </td>

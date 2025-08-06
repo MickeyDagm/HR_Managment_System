@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../contexts/AuthContext';
-import { mockJobPostings, mockEmployees } from '../../data/mockData';
-import { JobPosting } from '../../types';
-import Card from '../../components/UI/Card';
-import Button from '../../components/UI/Button';
-import PageHeader from '../../components/UI/PageHeader';
+import { useAuth } from '../contexts/AuthContext';
+import { mockJobPostings, mockEmployees } from '../data/mockData';
+import { JobPosting } from '../types';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const HRJobPosting: React.FC = () => {
   const { user } = useAuth();
@@ -52,6 +53,9 @@ const HRJobPosting: React.FC = () => {
     'Economics',
     'Custom'
   ];
+
+  // Get today's date in YYYY-MM-DD format for min attribute
+  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     let result = [...jobPostings];
@@ -151,6 +155,10 @@ const HRJobPosting: React.FC = () => {
   const statuses = ['active', 'closed', 'draft', 'pending'];
 
   return (
+    <>
+    <Helmet>
+        <title>Job Posting | HR Management System</title>
+      </Helmet>
     <div className="space-y-6">
       <PageHeader title='Job Post Management'/>
 
@@ -254,6 +262,7 @@ const HRJobPosting: React.FC = () => {
                 name="deadline"
                 value={formData.deadline}
                 onChange={handleInputChange}
+                min={today}
                 className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#72c02c] focus:border-[#72c02c]"
               />
             </div>
@@ -487,6 +496,7 @@ const HRJobPosting: React.FC = () => {
         </Card>
       )}
     </div>
+    </>
   );
 };
 

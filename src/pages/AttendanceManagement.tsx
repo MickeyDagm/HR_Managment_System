@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import toast from 'react-hot-toast';
-import { mockAttendanceRecords, mockEmployees } from '../../data/mockData';
-import { AttendanceRecord } from '../../types';
-import Card from '../../components/UI/Card';
-import Button from '../../components/UI/Button';
-import PageHeader from '../../components/UI/PageHeader';
+import { mockAttendanceRecords, mockEmployees } from '../data/mockData';
+import { AttendanceRecord } from '../types';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import PageHeader from '../components/UI/PageHeader';
 
 const HRAttendance: React.FC = () => {
   const [filters, setFilters] = useState({

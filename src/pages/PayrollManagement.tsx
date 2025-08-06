@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../contexts/AuthContext';
-import { mockPayrollRecords, mockEmployees } from '../../data/mockData';
-import Card from '../../components/UI/Card';
-import Button from '../../components/UI/Button';
-import { PayrollRecord } from '../../types';
-import PageHeader from '../../components/UI/PageHeader';
+import { useAuth } from '../contexts/AuthContext';
+import { mockPayrollRecords, mockEmployees } from '../data/mockData';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import { PayrollRecord } from '../types';
+import PageHeader from '../components/UI/PageHeader';
+
 
 const HRPayroll: React.FC = () => {
+
+  useEffect(() => {
+  document.title = "Payroll Management | HR Management System";
+}, []);
+
   const { user } = useAuth();
   // Add daysWorked to each payroll record with a default value of 22 (typical working days per month)
   const [payrolls, setPayrolls] = useState<PayrollRecord[]>(

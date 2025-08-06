@@ -1,0 +1,23 @@
+    boards
+        id (uuid, primary key)
+        title (text)
+        description (text, optional)
+        user_id (uuid, references auth.users)
+        created_at (timestamp)
+        updated_at (timestamp)
+    lists
+        id (uuid, primary key)
+        title (text)
+        board_id (uuid, references boards)
+        position (integer)
+        created_at (timestamp)
+    cards
+        id (uuid, primary key)
+        title (text)
+        description (text, optional)
+        list_id (uuid, references lists)
+        position (integer)
+        due_date (date, optional)
+        labels (text array)
+        created_at (timestamp)
+        updated_at (timestamp)

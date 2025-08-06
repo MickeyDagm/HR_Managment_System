@@ -1,24 +1,35 @@
-// src/pages/Employee/EmployeePayroll.tsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import toast from 'react-hot-toast';
-import { useAuth } from '../../contexts/AuthContext';
-import { getPayrollByEmployee } from '../../data/mockData';
-import Card from '../../components/UI/Card';
-import  Button  from '../../components/UI/Button';
-import PageHeader from '../../components/UI/PageHeader';
+import { useAuth } from '../contexts/AuthContext';
+import { getPayrollByEmployee } from '../data/mockData';
+import Card from '../components/UI/Card';
+import Button from '../components/UI/Button';
+import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
+
+interface AdvanceRequest {
+  id: string;
+  reason: string;
+  date: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
+}
 
 const EmployeePayroll: React.FC = () => {
   const { user } = useAuth();
   const payrolls = user ? getPayrollByEmployee(user.id) : [];
-  const latest = payrolls.length > 0 ? payrolls[payrolls.length - 1] : undefined; // latest payslip for monthly PDF
+  const latest = payrolls.length > 0 ? payrolls[payrolls.length - 1] : undefined;
+  
+  // State for advance payment popup and requests
+  const [showAdvancePopup, setShowAdvancePopup] = useState(false);
+  const [advanceReason, setAdvanceReason] = useState('');
+  const [advanceRequests, setAdvanceRequests] = useState<AdvanceRequest[]>([]);
 
   const downloadYearlyPdf = () => {
     const doc = new jsPDF();
     doc.setFontSize(16);
-    doc.setTextColor('#059669'); // emerald
+    doc.setTextColor('#059669');
     doc.text(`${user?.name}'s Yearly Payroll`, 14, 20);
 
     autoTable(doc, {
@@ -36,7 +47,7 @@ const EmployeePayroll: React.FC = () => {
         `ETB ${p.netSalary.toLocaleString()}`
       ]),
       styles: { fontSize: 10 },
-      headStyles: { fillColor: [5, 150, 105] } 
+      headStyles: { fillColor: [5, 150, 105] }
     });
 
     doc.save(`${user?.name}-YearlyPayroll.pdf`);
@@ -58,7 +69,6 @@ const EmployeePayroll: React.FC = () => {
     doc.text(`Position: ${user?.position}`, 14, 42);
     doc.text(`Department: ${user?.department}`, 14, 48);
 
-    // Box layout
     let earningsTableFinalY = 60;
     autoTable(doc, {
       startY: 60,
@@ -71,7 +81,7 @@ const EmployeePayroll: React.FC = () => {
       ],
       styles: { fontSize: 11 },
       theme: 'grid',
-      headStyles: { fillColor: [16, 185, 129] }, // emerald
+      headStyles: { fillColor: [16, 185, 129] },
       didDrawPage: function (data) {
         if (data.cursor) {
           earningsTableFinalY = data.cursor.y;
@@ -90,7 +100,7 @@ const EmployeePayroll: React.FC = () => {
       ],
       styles: { fontSize: 11 },
       theme: 'grid',
-      headStyles: { fillColor: [239, 68, 68] }, // red
+      headStyles: { fillColor: [239, 68, 68] },
       didDrawPage: function (data) {
         if (data.cursor) {
           deductionsTableFinalY = data.cursor.y;
@@ -106,7 +116,30 @@ const EmployeePayroll: React.FC = () => {
     toast.success('Monthly payslip downloaded successfully');
   };
 
+  const handleAdvanceRequest = () => {
+    if (!advanceReason.trim()) {
+      toast.error('Please provide a reason for the advance request');
+      return;
+    }
+
+    const newRequest: AdvanceRequest = {
+      id: Math.random().toString(36).substr(2, 9),
+      reason: advanceReason,
+      date: new Date().toLocaleDateString(),
+      status: 'Pending'
+    };
+
+    setAdvanceRequests([...advanceRequests, newRequest]);
+    setAdvanceReason('');
+    setShowAdvancePopup(false);
+    toast.success('Advance payment request submitted successfully');
+  };
+
   return (
+    <>
+    <Helmet>
+        <title>Payroll | HR Management System</title>
+      </Helmet>
     <div className="space-y-6">
       <PageHeader title='Payroll History'/>
 
@@ -119,10 +152,46 @@ const EmployeePayroll: React.FC = () => {
             📁 Download Yearly Summary
           </Button>
         </div>
-        <Button className="bg-orange-500 hover:bg-orange-600 text-white focus:ring-orange-600" onClick={() => toast.success('Request for advance payment submitted')}>
+        <Button 
+          className="bg-orange-500 hover:bg-orange-600 text-white focus:ring-orange-600" 
+          onClick={() => setShowAdvancePopup(true)}
+        >
           Request for Advance Payment
         </Button>
       </div>
+
+      {/* Advance Payment Request Popup */}
+      {showAdvancePopup && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Advance Payment Request</h2>
+            <textarea
+              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-emerald-500"
+              rows={4}
+              value={advanceReason}
+              onChange={(e) => setAdvanceReason(e.target.value)}
+              placeholder="Enter reason for advance payment..."
+            />
+            <div className="mt-4 flex justify-end space-x-2">
+              <Button
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800"
+                onClick={() => {
+                  setAdvanceReason('');
+                  setShowAdvancePopup(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="bg-emerald-500 hover:bg-emerald-600 text-white"
+                onClick={handleAdvanceRequest}
+              >
+                Submit Request
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Monthly Breakdown</h2>
@@ -166,7 +235,40 @@ const EmployeePayroll: React.FC = () => {
           </table>
         </div>
       </Card>
+
+      {/* Pending Advance Requests Section */}
+      <Card>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Pending Advance Requests</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-300 rounded-lg overflow-hidden">
+            <thead className="bg-[#72c02c] text-white">
+              <tr>
+                <th className="px-4 py-2 text-left text-sm font-semibold">Date</th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">Reason</th>
+                <th className="px-4 py-2 text-left text-sm font-semibold">Status</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {advanceRequests.map((request) => (
+                <tr key={request.id}>
+                  <td className="px-4 py-3 text-sm text-gray-700">{request.date}</td>
+                  <td className="px-4 py-3 text-sm text-gray-700">{request.reason}</td>
+                  <td className="px-4 py-3 text-sm text-gray-700">{request.status}</td>
+                </tr>
+              ))}
+              {advanceRequests.length === 0 && (
+                <tr>
+                  <td colSpan={3} className="px-4 py-3 text-center text-sm text-gray-500">
+                    No pending advance requests.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </div>
+  </>
   );
 };
 

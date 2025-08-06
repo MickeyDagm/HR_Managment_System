@@ -1,4 +1,4 @@
-import Card from "../../components/UI/Card";
+import Card from "../components/UI/Card";
 
 interface NotificationProps {
   visible: boolean;
