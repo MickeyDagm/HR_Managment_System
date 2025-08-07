@@ -55,7 +55,7 @@ const EmployeePayroll: React.FC = () => {
   };
 
   const downloadMonthlyPayslip = () => {
-    if (!latest) return;
+    if (!latest) return toast.error('No payroll records available for the latest month');
     const doc = new jsPDF();
 
     doc.setFontSize(18);

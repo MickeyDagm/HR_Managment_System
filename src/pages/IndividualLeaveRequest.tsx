@@ -150,7 +150,7 @@ const EmployeeLeavePage: React.FC = () => {
               value={formData.reason}
               onChange={handleChange}
               rows={3}
-              className="w-full mt-1 border-gray-300 rounded-md shadow-sm p-4 focus:outline-none focus:ring-2 focus:ring-[#72c02c] focus:border-transparent "
+              className="w-full mt-1 border-gray-300 rounded-md shadow-md p-4 focus:outline-none focus:ring-2 focus:ring-[#72c02c] focus:border-transparent "
               placeholder="Write a short reason..."
               required
             />
