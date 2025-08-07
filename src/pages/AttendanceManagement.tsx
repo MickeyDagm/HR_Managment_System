@@ -7,6 +7,7 @@ import { AttendanceRecord } from '../types';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
 import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const HRAttendance: React.FC = () => {
   const [filters, setFilters] = useState({
@@ -75,6 +76,10 @@ const HRAttendance: React.FC = () => {
 //   const employees = mockEmployees;
 
   return (
+    <>
+    <Helmet>
+      <title>Applicant List | HR Management System</title>
+    </Helmet>
     <div className="space-y-6">
       <PageHeader title="Attendance Management" />
 
@@ -167,6 +172,7 @@ const HRAttendance: React.FC = () => {
         </div>
       </Card>
     </div>
+    </>
   );
 };
 

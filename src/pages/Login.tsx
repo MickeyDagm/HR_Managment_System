@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/UI/Button';
+import { Helmet } from "react-helmet-async";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -35,6 +36,10 @@ const Login: React.FC = () => {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>Login | HR Management System</title>
+    </Helmet>
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         {/* Header */}
@@ -120,6 +125,7 @@ const Login: React.FC = () => {
         
       </div>
     </div>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import { Applicant } from '../types';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
 import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const HRApplicantDetails: React.FC = () => {
   const { user } = useAuth();

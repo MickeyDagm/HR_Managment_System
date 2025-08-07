@@ -7,6 +7,7 @@ import { Employee, LeaveRequest } from '../types';
 import Card from '../components/UI/Card';
 import userLogo from '../assets/user_logo.jpg';
 import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const HREmployeeDetails: React.FC = () => {
   // const { user } = useAuth();
@@ -75,6 +76,8 @@ const HREmployeeDetails: React.FC = () => {
   const attendancePercentage = calculateAttendance(employee.id);
 
   return (
+    <>
+    
     <div className="space-y-6">
       <PageHeader title='Employee Details'/>
       <Card>
@@ -239,6 +242,7 @@ const HREmployeeDetails: React.FC = () => {
         </div>
       </Card>
     </div>
+    </>
   );
 };
 

@@ -2,10 +2,15 @@
 import React from 'react';
 import { Lock, Star } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { Helmet } from "react-helmet-async";
 
 const PremiumFeatureMessage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <>
+    <Helmet>
+      <title>Premium Features | HR Management System</title>
+    </Helmet>
+    <div className=" flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
         <div className="flex justify-center mb-6">
           <Lock className="h-12 w-12 text-[#72c02c]" />
@@ -34,6 +39,7 @@ const PremiumFeatureMessage: React.FC = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 

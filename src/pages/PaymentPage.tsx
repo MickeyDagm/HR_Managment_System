@@ -1,13 +1,14 @@
-import { CheckIcon } from '@heroicons/react/20/solid';
+import { CheckIcon, PhoneIcon } from '@heroicons/react/20/solid';
 import React from 'react';
+import { Helmet } from "react-helmet-async";
+
 
 // Define the Tier interface for typing the tiers array
 interface Tier {
   name: string;
   id: string;
   href: string;
-  priceMonthly: string;
-  description: string;
+  price: string;
   features: string[];
   featured: boolean;
 }
@@ -15,27 +16,58 @@ interface Tier {
 // Define the tiers array with typed data
 const tiers: Tier[] = [
   {
-    name: 'Regular',
-    id: 'tier-regular',
+    name: '1 Month CV Search',
+    id: '1-month',
     href: '#',
-    priceMonthly: 'ETB',
-    description: "The perfect plan if you're just getting started with our product.",
-    features: ['25 products', 'Up to 10,000 subscribers', 'Advanced analytics', '24-hour support response time'],
+    price: '3000 ETB',
+    features: [
+      'Preview candidates profile for free before viwing their CV',
+      'Download & Contact up to 50 CVs',
+      'Access Expires after 1 month',
+      'Unlimited Searching',
+      '24 hours Support'
+    ],
+    featured: false,
+  },
+   {
+    name: '3 Month CV Search',
+    id: '3-month',
+    href: '#',
+    price: '8000 ETB',
+    features: [
+      'Preview candidates profile for free before viwing their CV',
+      'Download & Contact up to 150 CVs',
+      'Access Expires after 3 month',
+      'Unlimited Searching',
+      '24 hours Support'
+    ],   
+     featured: false,
+  },
+   {
+    name: '6 Month CV Search',
+    id: '6-month',
+    href: '#',
+    price: '15000 ETB',
+    features: [
+      'Preview candidates profile for free before viwing their CV',
+      'Download & Contact up to 350 CVs',
+      'Access Expires after 6 month',
+      'Unlimited Searching',
+      '24 hours Support'
+    ],
     featured: false,
   },
   {
-    name: 'Enterprise',
-    id: 'tier-enterprise',
+    name: '1 year CV Search',
+    id: '1-year',
     href: '#',
-    priceMonthly: 'ETB',
-    description: 'Dedicated support and infrastructure for your company.',
+    price: '25000 ETB',
     features: [
-      'Unlimited products',
-      'Unlimited subscribers',
-      'Advanced analytics',
-      'Dedicated support representative',
-      'Marketing automations',
-      'Custom integrations',
+      'Preview candidates profile for free before viwing their CV',
+      'Download & Contact up to 1000 CVs',
+      'Access Expires after 1 year',
+      'Unlimited Searching',
+      '24 hours Support'
     ],
     featured: true,
   },
@@ -48,27 +80,16 @@ const classNames = (...classes: (string | undefined | null | false)[]): string =
 
 const PaymentPage: React.FC = () => {
   return (
-    <div className="relative isolate bg-white px-4 py-12 sm:py-16 lg:px-6">
-      <div aria-hidden="true" className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-24 blur-3xl">
-        <div
-          style={{
-            clipPath:
-              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-          }}
-          className="mx-auto aspect-1155/678 w-200 bg-gradient-to-tr from-[#72c02c] to-[#5ca520] opacity-20"
-        />
-      </div>
-      <div className="mx-auto max-w-3xl text-center">
-        <h2 className="text-sm/6 font-semibold text-[#72c02c]">Pricing</h2>
-        <p className="mt-2 text-3xl font-semibold tracking-tight text-balance text-gray-900 sm:text-4xl">
+    <>
+      <Helmet>
+        <title>Payment | HR Management System</title>
+      </Helmet>
+      <div className="mx-auto  text-center">
+        <p className="text-3xl font-semibold tracking-tight text-balance text-gray-900 sm:text-3xl">
           Choose the right plan for you
         </p>
       </div>
-      <p className="mx-auto mt-4 max-w-xl text-center text-base font-medium text-pretty text-gray-600 sm:text-lg/7">
-        Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer
-        loyalty, and driving sales.
-      </p>
-      <div className="mx-auto mt-8 grid max-w-md grid-cols-1 items-center gap-y-4 sm:mt-12 sm:gap-y-0 lg:max-w-3xl lg:grid-cols-2">
+      <div className="mx-auto mt-8 grid  grid-cols-2 items-center gap-3 sm:mt-12  lg:grid-cols-4">
         {tiers.map((tier, tierIdx) => (
           <div
             key={tier.id}
@@ -84,7 +105,7 @@ const PaymentPage: React.FC = () => {
           >
             <h3
               id={tier.id}
-              className={classNames(tier.featured ? 'text-[#5ca520]' : 'text-[#72c02c]', 'text-sm/6 font-semibold')}
+              className={classNames(tier.featured ? 'text-[#5ca520]' : 'text-[#72c02c]', 'text-lg font-semibold')}
             >
               {tier.name}
             </h3>
@@ -95,20 +116,14 @@ const PaymentPage: React.FC = () => {
                   'text-3xl font-semibold tracking-tight',
                 )}
               >
-                {tier.priceMonthly}
+                {tier.price}
               </span>
-              <span className={classNames(tier.featured ? 'text-gray-400' : 'text-gray-500', 'text-sm')}>
-                /month
-              </span>
-            </p>
-            <p className={classNames(tier.featured ? 'text-gray-300' : 'text-gray-600', 'mt-4 text-sm/6')}>
-              {tier.description}
             </p>
             <ul
               role="list"
               className={classNames(
                 tier.featured ? 'text-gray-300' : 'text-gray-600',
-                'mt-6 space-y-2 text-xs/5 sm:mt-8',
+                'mt-6 space-y-2 text-sm sm:mt-8',
               )}
             >
               {tier.features.map((feature) => (
@@ -137,7 +152,10 @@ const PaymentPage: React.FC = () => {
           </div>
         ))}
       </div>
-    </div>
+      <div className='mt-5 p-3 bg-[#72c02c]'>
+        <p className='text-md text-white text-center px-auto sm:text-wrap'>Need More Detail? Contact Marketing Team <PhoneIcon className='w-6 h-5 inline'/> 0988747248 </p>
+      </div>    
+    </>
   );
 };
 

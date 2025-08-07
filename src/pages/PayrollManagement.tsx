@@ -3,11 +3,12 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import toast from 'react-hot-toast';
 import { useAuth } from '../contexts/AuthContext';
-import { mockPayrollRecords, mockEmployees } from '../data/mockData';
+import { mockPayrollRecords } from '../data/mockData';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
 import { PayrollRecord } from '../types';
 import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 
 const HRPayroll: React.FC = () => {
@@ -95,6 +96,10 @@ const HRPayroll: React.FC = () => {
   const uniqueMonths = Array.from(new Set(payrolls.map(p => `${p.month} ${p.year}`)));
 
   return (
+    <>
+    <Helmet>
+      <title>Payroll Management | HR Management System</title>
+    </Helmet>
     <div className="space-y-6">
       <PageHeader title='Payroll Management'/>
 
@@ -174,6 +179,7 @@ const HRPayroll: React.FC = () => {
         </div>
       </Card>
     </div>
+    </>
   );
 };
 

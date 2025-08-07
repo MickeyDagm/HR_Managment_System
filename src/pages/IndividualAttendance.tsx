@@ -32,8 +32,8 @@ const Attendance: React.FC = () => {
   return (
     <>
     <Helmet>
-        <title>Attendance | HR Management System</title>
-      </Helmet>
+      <title>Attendance Request | HR Management System</title>
+    </Helmet>
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">

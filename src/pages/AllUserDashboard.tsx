@@ -23,6 +23,7 @@ import {
   mockAttendanceRecords,
   mockLeaveRequests,
   mockPayrollRecords,
+  mockDepartment,
 } from '../data/mockData';
 import { Features } from '../types/features';
 import { computeFinalPermissions } from '../types/levels';
@@ -331,12 +332,14 @@ const Dashboard: React.FC = () => {
             <div className="space-y-3">
               {Object.entries(
                 mockEmployees.reduce((acc: Record<string, number>, emp) => {
-                  acc[emp.department] = (acc[emp.department] || 0) + 1;
+                  const dept = mockDepartment.find(d => d.id === emp.department);
+                  const deptName = dept ? dept.name : 'Unknown'; // Fallback to 'Unknown' if no match
+                  acc[deptName] = (acc[deptName] || 0) + 1;
                   return acc;
                 }, {})
-              ).map(([dept, count]) => (
-                <div key={dept} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">{dept}</span>
+              ).map(([deptName, count]) => (
+                <div key={deptName} className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">{deptName}</span>
                   <span className="text-sm font-medium text-gray-900">{count} employees</span>
                 </div>
               ))}

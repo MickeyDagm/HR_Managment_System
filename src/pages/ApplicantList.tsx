@@ -5,6 +5,7 @@ import { Applicant } from '../types';
 import Table from '../components/UI/Table';
 import Button from '../components/UI/Button';
 import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const HRRecruitment: React.FC = () => {
   const [filteredApplicants, setFilteredApplicants] = useState<Applicant[]>([]);
@@ -56,6 +57,10 @@ const HRRecruitment: React.FC = () => {
   ];
 
   return (
+    <>
+    <Helmet>
+      <title>Applicant List | HR Management System</title>
+    </Helmet>
     <div className="p-4">
       <PageHeader title='Recruitment Management'/>
 
@@ -117,6 +122,7 @@ const HRRecruitment: React.FC = () => {
         )}
       </Table>
     </div>
+    </>
   );
 };
 

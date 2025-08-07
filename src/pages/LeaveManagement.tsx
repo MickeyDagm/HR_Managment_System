@@ -8,6 +8,7 @@ import { LeaveRequest } from '../types';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
 import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const HRLeaveManagement: React.FC = () => {
   const { user } = useAuth();
@@ -124,6 +125,10 @@ const HRLeaveManagement: React.FC = () => {
   ];
 
   return (
+    <>
+    <Helmet>
+      <title>Leave Management | HR Management System</title>
+    </Helmet>
     <div className="space-y-6">
       <PageHeader title='Leave Request Management'/>
 
@@ -316,6 +321,7 @@ const HRLeaveManagement: React.FC = () => {
         </div>
       </Card>
     </div>
+    </>
   );
 };
 

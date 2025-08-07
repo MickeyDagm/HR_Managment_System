@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import Button from '../components/UI/Button';
 import { mockCompanies, mockJobPostings, registerUser } from '../data/mockData';
 import { User } from '../types';
+import { Helmet } from "react-helmet-async";
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
@@ -55,6 +56,10 @@ const Signup: React.FC = () => {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>Sign Up | HR Management System</title>
+    </Helmet>
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         {/* Header */}
@@ -218,6 +223,7 @@ const Signup: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

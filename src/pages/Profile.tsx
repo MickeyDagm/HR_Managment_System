@@ -5,6 +5,7 @@ import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
 import Modal from '../components/UI/Modal';
 import userLogo from '../assets/user_logo.jpg';
+import { Helmet } from 'react-helmet-async';
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
@@ -186,6 +187,10 @@ const Profile: React.FC = () => {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>Profile | HR Management System</title>
+    </Helmet>
     <div className="space-y-6 p-6 mx-auto">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
@@ -535,6 +540,7 @@ const Profile: React.FC = () => {
         </div>
       </Modal>
     </div>
+    </>
   );
 };
 

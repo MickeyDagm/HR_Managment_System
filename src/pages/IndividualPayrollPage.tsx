@@ -138,8 +138,8 @@ const EmployeePayroll: React.FC = () => {
   return (
     <>
     <Helmet>
-        <title>Payroll | HR Management System</title>
-      </Helmet>
+      <title>Payroll | HR Management System</title>
+    </Helmet>
     <div className="space-y-6">
       <PageHeader title='Payroll History'/>
 

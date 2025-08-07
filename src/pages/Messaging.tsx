@@ -66,13 +66,54 @@ const Messaging: React.FC = () => {
             -ms-overflow-style: none;
             scrollbar-width: none;
           }
+          .chat-button-text {
+            display: none;
+            white-space: nowrap;
+          }
+          .chat-button:hover .chat-button-text {
+            display: inline;
+            margin-left: 8px;
+          }
+          .chat-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+          }
+          .chat-button:hover {
+            width: 160px;
+            border-radius: 24px;
+          }
+          .dept-list {
+              display: flex;
+              overflow-x: auto;
+              white-space: nowrap;
+            }
+            .dept-item {
+              flex: 0 0 auto;
+              min-width: 100px;
+            }
+          }
+          @media (min-width: 641px) {
+            .dept-list {
+              display: flex;
+              overflow-x: ${mockDepartment.length > 4 ? 'auto' : 'hidden'};
+              white-space: nowrap;
+            }
+            .dept-item {
+              flex: 1;
+              min-width: ${mockDepartment.length > 4 ? '120px' : 'auto'};
+            }
         `}
       </style>
       {/* Floating Chat Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-4 right-4 z-50">
         <button
           onClick={() => setShowMessaging(!showMessaging)}
-          className="w-48 h-14 px-4 border border-gray-300 rounded-full flex items-center space-x-4 shadow-md hover:shadow-lg hover:bg-[#5ca520] transition duration-200 bg-[#72c02c]"
+          className="chat-button w-48 h-14 px-4 border border-gray-300 rounded-full flex items-center space-x-4 shadow-md hover:shadow-lg hover:bg-[#5ca520] transition duration-200 bg-[#72c02c]"
         >
           <div className="relative">
             <MessageCircleMore className="w-6 h-6 text-white" strokeWidth={3} />
@@ -82,13 +123,13 @@ const Messaging: React.FC = () => {
               </span>
             )}
           </div>
-          <span className="text-white font-bold">Messaging...</span>
+          <span className="chat-button-text text-white font-bold">Messaging...</span>
         </button>
       </div>
 
       {/* Chat Popup */}
       {showMessaging && (
-        <div className="fixed bottom-24 right-6 w-[600px] h-[500px] bg-white border border-gray-300 rounded-xl shadow-lg z-50 flex flex-col overflow-hidden">
+        <div className="fixed bottom-20 right-4 w-[600px] h-[500px] bg-white border border-gray-300 rounded-xl shadow-lg z-50 flex flex-col overflow-hidden">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-2 border-b bg-gray-50">
             <span className="font-semibold text-gray-700">Messages</span>
@@ -103,11 +144,11 @@ const Messaging: React.FC = () => {
             {!selectedUserId && (
               <div className="w-full bg-gray-50 overflow-y-auto hide-scrollbar">
                 {/* Department Tabs */}
-                <div className="flex justify-between shadow-md sticky top-0 z-10 bg-gray-50">
+                <div className="dept-list flex justify-between shadow-md sticky top-0 z-10 bg-gray-50">
                   {mockDepartment.map((dept) => (
                     <li 
                       key={dept.id}
-                      className={`list-none relative px-auto py-3 cursor-pointer w-full flex align-center justify-center ${selectedDept === dept.name ? 'text-[#72c02c] bg-[#def8ca]' : 'text-gray-600 hover:text-[#72c02c]'}`}
+                      className={` dep-item list-none relative px-auto py-3 cursor-pointer w-full flex align-center justify-center ${selectedDept === dept.name ? 'text-[#72c02c] bg-[#def8ca]' : 'text-gray-600 hover:text-[#72c02c]'}`}
                       onClick={() => handleDeptSelect(dept.name)}
                     >
                       {dept.name}
@@ -129,7 +170,7 @@ const Messaging: React.FC = () => {
                     return (
                       <div
                         key={chatUser.id}
-                        className="flex items-center p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition duration-150"
+                        className="flex items-center p-4 cursor-pointer hover:bg-gray-100 border-b border-gray-200 transition duration-150 hide-scrollbar"
                         onClick={() => setSelectedUserId(chatUser.id)}
                       >
                         <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold overflow-hidden">

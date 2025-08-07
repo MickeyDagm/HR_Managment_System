@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../components/UI/Table';
-import { mockEmployees, mockLeaveRequests } from '../data/mockData';
+import { mockEmployees, mockLeaveRequests, mockDepartment } from '../data/mockData';
 import { Employee } from '../types/index';
 import Button from '../components/UI/Button';
 import { NavLink } from 'react-router-dom';
 import PageHeader from '../components/UI/PageHeader';
+import { Helmet } from "react-helmet-async";
 
 const EmployeeList: React.FC = () => {
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
@@ -80,8 +81,19 @@ const EmployeeList: React.FC = () => {
         new Date(req.endDate) >= today
     );
   };
+  const getDepartmentName = (departmentId: string): string => {
+    const department = mockDepartment.find(dept => dept.id === departmentId);
+    return department ? department.name : 'Unknown';
+  }
 
-  const departments = Array.from(new Set(mockEmployees.map(emp => emp.department)));
+  const departments = Array.from(
+    new Set(
+      mockEmployees.map(emp => {
+        const dept = mockDepartment.find(dept => dept.id === emp.department);
+        return dept ? dept.name : '';
+      }).filter(name => name !== '') 
+    )
+  );
   const statuses = Array.from(new Set(mockEmployees.map(emp => emp.status)));
   const statusOptions = [...statuses, 'on_leave', 'not_on_leave'];
   const positions = Array.from(new Set(mockEmployees.map(emp => emp.position)));
@@ -99,6 +111,10 @@ const EmployeeList: React.FC = () => {
   ];
 
   return (
+    <>
+    <Helmet>
+      <title>Employee List | HR Management System</title>
+    </Helmet>
     <div className="p-4">
       <PageHeader title="Employee Management" />
 
@@ -167,7 +183,7 @@ const EmployeeList: React.FC = () => {
           <tr key={emp.id} className="odd:bg-emerald-50">
             <td className="px-6 py-4 text-sm text-gray-900">{emp.name}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.employeeId}</td>
-            <td className="px-6 py-4 text-sm text-gray-600">{emp.department}</td>
+            <td className="px-6 py-4 text-sm text-gray-600">{getDepartmentName(emp.department)}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.position}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.email}</td>
             <td className="px-6 py-4 text-sm text-gray-600">{emp.phone}</td>
@@ -191,6 +207,7 @@ const EmployeeList: React.FC = () => {
         )}
       </Table>
     </div>
+    </>
   );
 };
 

@@ -157,8 +157,8 @@ const HRJobPosting: React.FC = () => {
   return (
     <>
     <Helmet>
-        <title>Job Posting | HR Management System</title>
-      </Helmet>
+      <title>Job Posting | HR Management System</title>
+    </Helmet>
     <div className="space-y-6">
       <PageHeader title='Job Post Management'/>
 

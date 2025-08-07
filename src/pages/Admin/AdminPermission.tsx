@@ -10,6 +10,7 @@ import Select from '../../components/UI/Select';
 import Checkbox from '../../components/UI/CheckBox';
 import Modal from '../../components/UI/Modal';
 import { Employee } from '../../types';
+import { Helmet } from "react-helmet-async";
 
 const AdminPermissions: React.FC = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
@@ -79,6 +80,10 @@ const AdminPermissions: React.FC = () => {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>Permissions | HR Management System</title>
+    </Helmet>
     <div className="p-4">
       <div className="bg-gradient-to-r from-[#72c02c] to-[#72c02c] rounded-xl p-6 text-white mb-6">
         <h1 className="text-2xl font-bold mb-2">Manage Employee Permissions</h1>
@@ -249,6 +254,7 @@ const AdminPermissions: React.FC = () => {
         </div>
       </Modal>
     </div>
+    </>
   );
 };
 
