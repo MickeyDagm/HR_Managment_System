@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle, User } from 'lucide-react';
+import { CheckCircle, User, ChevronDown} from 'lucide-react';
 import toast from 'react-hot-toast';
 import Button from '../../components/UI/Button';
 import Card from '../../components/UI/Card';
@@ -17,6 +17,9 @@ const AdminPermissions: React.FC = () => {
   const [selectedLevel, setSelectedLevel] = useState<keyof typeof PermissionLevels>('LEVEL_1');
   const [featureOverrides, setFeatureOverrides] = useState<FeatureKey[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPermissionLevelOpen, setIsPermissionLevelOpen] = useState(false);
+  const [isCustomOverrideOpen, setIsCustomOverrideOpen] = useState(false);
+
   const [pendingChanges, setPendingChanges] = useState<{
     level: keyof typeof PermissionLevels;
     overrides: FeatureKey[];
@@ -149,24 +152,30 @@ const AdminPermissions: React.FC = () => {
                     ]}
                   />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Features Included</h3>
-                <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {PermissionLevels[selectedLevel].map(feature => (
-                    <li key={feature} className="flex items-center text-gray-600">
-                      <CheckCircle className="w-5 h-5 text-emerald-600 mr-2" />
-                      <span>{feature.replace(/_/g, ' ').toLowerCase()}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-
-              {/* Feature Overrides */}
-              <Card>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Feature Overrides</h2>
-                <p className="text-sm text-gray-600 mb-4">
-                  Select additional features or remove features from the selected level.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className='flex justify-between'>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{isPermissionLevelOpen ? 'Features Included' :' List Included Features'}</h3>
+                  <ChevronDown className='cursor-pointer' onClick={()=>setIsPermissionLevelOpen(prev => !prev)}/>
+                </div>
+                {isPermissionLevelOpen && (
+                  <>
+                  <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {PermissionLevels[selectedLevel].map(feature => (
+                      <li key={feature} className="flex items-center text-gray-600">
+                        <CheckCircle className="w-5 h-5 text-emerald-600 mr-2" />
+                        <span>{feature.replace(/_/g, ' ').toLowerCase()}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className='flex justify-between mt-6 '>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-4">Give additional permissions</h2>
+                  <ChevronDown className='cursor-pointer' onClick={()=>setIsCustomOverrideOpen(prev => !prev)}/>
+                </div>
+                {isCustomOverrideOpen && (
+                  <>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Select additional features or remove features from the selected level.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {Object.values(Features).map(feature => (
                     <Checkbox
                       key={feature}
@@ -176,8 +185,17 @@ const AdminPermissions: React.FC = () => {
                       disabled={PermissionLevels[selectedLevel].includes(feature)}
                     />
                   ))}
+                  
                 </div>
+                </>
+                )}
+                </>
+                )}
+              
               </Card>
+
+              {/* Feature Overrides */}
+
 
               {/* Employee Details and Actions */}
               <Card>
