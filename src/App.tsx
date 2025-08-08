@@ -25,6 +25,7 @@ import PremiumFeatureMessage from './pages/PremiumFeaturesPage';
 import AdminPermissions from './pages/Admin/AdminPermission';
 import AllUserDashboard from './pages/AllUserDashboard'
 import PaymentPage from './pages/PaymentPage';
+import NotFound from './pages/NotFound';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -107,6 +108,8 @@ const App: React.FC = () => {
               <Route path='/premium' element={<PremiumFeatureMessage/>}/>  
 
               <Route path='/payment' element={<PaymentPage/>}/>
+
+              <Route path='*' element={<NotFound />} />
 
             </Route>
           </Routes>

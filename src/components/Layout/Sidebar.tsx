@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/geezjobs_logo.jpg';
 import userLogo from '../../assets/user_logo.jpg';
-import { LogOut } from 'lucide-react';
+import { HelpCircleIcon, LogOut } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { mockEmployees } from '../../data/mockData';
 import { Features } from '../../types/features';
@@ -115,6 +115,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
           {/* Footer */}
           <div className="p-2 border-t flex-shrink-0">
+            <NavLink
+            to="/help">
+              <button
+                className="flex items-center w-full px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-all duration-200 group/logout relative"
+              >
+                <HelpCircleIcon className="w-5 h-5 flex-shrink-0" />
+                <span className="ml-3 font-medium text-sm overflow-hidden transition-all duration-300 lg:opacity-0 lg:w-0 lg:group-hover:opacity-100 lg:group-hover:w-auto whitespace-nowrap">
+                  Help
+                </span>
+              </button>
+            </NavLink>
+           
             <button
               onClick={logout}
               className="flex items-center w-full px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-lg transition-all duration-200 group/logout relative"
@@ -123,10 +135,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <span className="ml-3 font-medium text-sm overflow-hidden transition-all duration-300 lg:opacity-0 lg:w-0 lg:group-hover:opacity-100 lg:group-hover:w-auto whitespace-nowrap">
                 Logout
               </span>
-              {/* Tooltip for collapsed state
-              <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded opacity-0 pointer-events-none transition-opacity duration-200 lg:group-hover/logout:opacity-0 lg:group-hover:group-hover/logout:opacity-0 lg:group-hover/logout:opacity-100 lg:group-hover:group-hover/logout:opacity-0 whitespace-nowrap z-50">
-                Logout
-              </div> */}
             </button>
           </div>
         </div>

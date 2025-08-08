@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Messeging from '../../pages/Messaging';
+import { Help } from '../../pages/Help';
 
 const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,6 +26,7 @@ const Layout: React.FC = () => {
         <main className="p-4 lg:p-6">
           <Outlet />
           <Messeging/>
+
         </main>
       </div>
     </div>
