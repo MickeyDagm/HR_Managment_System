@@ -16,13 +16,8 @@ import HRJobPosting from './pages/JobPosting';
 import HREmployeeDetails from './pages/EmployeeDetails';
 import HRRecruitment from './pages/ApplicantList';
 import HRApplicantDetails from './pages/ApplicantDetails';
-import AdminUserList from './pages/Admin/AdminUserList';
-import AdminCompanyList from './pages/Admin/AdminCompanyList';
-import AdminJobPosting from './pages/Admin/AdminJobPosting';
-import AdminJobDetail from './pages/Admin/AdminJobDetails';
-import AdminUserDetails from './pages/Admin/AdminUserDetails';
 import PremiumFeatureMessage from './pages/PremiumFeaturesPage';
-import AdminPermissions from './pages/Admin/AdminPermission';
+import AdminPermissions from './pages/AdminPermission';
 import AllUserDashboard from './pages/AllUserDashboard'
 import PaymentPage from './pages/PaymentPage';
 import NotFound from './pages/NotFound';
@@ -99,11 +94,11 @@ const App: React.FC = () => {
               <Route path="/recruitment" element={<HRRecruitment />} />
               <Route path="/applicant-details/:applicantId" element={<HRApplicantDetails />} />
                   
-              <Route path="user-records" element={<AdminUserList/>} />
+              {/* <Route path="user-records" element={<AdminUserList/>} />
               <Route path="company-records" element={<AdminCompanyList/>} />
               <Route path="job-postings" element={<AdminJobPosting/>} />
               <Route path="/job-details/:id" element={<AdminJobDetail />} />
-              <Route path="/user-details/:id" element={<AdminUserDetails />} />
+              <Route path="/user-details/:id" element={<AdminUserDetails />} /> */}
 
               <Route path='/premium' element={<PremiumFeatureMessage/>}/>  
 

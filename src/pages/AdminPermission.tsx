@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { CheckCircle, User, ChevronDown} from 'lucide-react';
 import toast from 'react-hot-toast';
-import Button from '../../components/UI/Button';
-import Card from '../../components/UI/Card';
-import { mockEmployees, mockCompanies } from '../../data/mockData';
-import { Features, FeatureKey } from '../../types/features';
-import { PermissionLevels, computeFinalPermissions } from '../../types/levels';
-import Select from '../../components/UI/Select';
-import Checkbox from '../../components/UI/CheckBox';
-import Modal from '../../components/UI/Modal';
-import { Employee } from '../../types';
+import Button from '../components/UI/Button';
+import Card from '../components/UI/Card';
+import { mockEmployees, mockCompanies } from '../data/mockData';
+import { Features, FeatureKey } from '../types/features';
+import { PermissionLevels, computeFinalPermissions } from '../types/levels';
+import Select from '../components/UI/Select';
+import Checkbox from '../components/UI/CheckBox';
+import Modal from '../components/UI/Modal';
+import { Employee } from '../types';
 import { Helmet } from "react-helmet-async";
 
 const AdminPermissions: React.FC = () => {
