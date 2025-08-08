@@ -186,7 +186,7 @@ const Dashboard: React.FC = () => {
             </HasPermission>
             <HasPermission permission={Features.TOTAL_EMPLOYEES}>
               <NavLink to="/company-records">
-                <StatCard title="Total Companies" value={totalCompanies} icon={Building2} color="emerald" />
+                <StatCard title="Total Branchs" value={totalCompanies} icon={Building2} color="emerald" />
               </NavLink>
             </HasPermission>
             <HasPermission permission={Features.JOB_POSTS}>
@@ -347,7 +347,7 @@ const Dashboard: React.FC = () => {
           </Card>
         </HasPermission>
 
-        {/* System Performance / Attendance Overview */}
+        {/* System Performance / Attendance Overview
         <Card>
           <h3 className="text-lg font-semibold text-gray-900 mb-4">System Overview</h3>
           <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
@@ -358,6 +358,11 @@ const Dashboard: React.FC = () => {
                 ? "This Month's Attendance"
                 : 'System performance metrics visualization'}
             </p>
+          </div>
+        </Card> */}
+        <Card>
+          <div className="flex items-center justify-center text-[#72c02c] font-semibold text-md w-full h-full p-6 text-center">
+            Attendance Overview Chart and Additional Features Coming Soon!
           </div>
         </Card>
       </div>

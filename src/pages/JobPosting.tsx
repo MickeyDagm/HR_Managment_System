@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../contexts/AuthContext';
-import { mockJobPostings, mockEmployees } from '../data/mockData';
+import { mockJobPostings, mockEmployees, mockDepartment } from '../data/mockData';
 import { JobPosting } from '../types';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
@@ -151,7 +151,14 @@ const HRJobPosting: React.FC = () => {
     setShowPreview(false);
   };
 
-  const departments = Array.from(new Set(mockEmployees.map(emp => emp.department)));
+  const departments = Array.from(
+      new Set(
+        mockEmployees.map(emp => {
+          const dept = mockDepartment.find(dept => dept.id === emp.department);
+          return dept ? dept.name : '';
+        }).filter(name => name !== '') 
+      )
+    );
   const statuses = ['active', 'closed', 'draft', 'pending'];
 
   return (
